@@ -3,8 +3,6 @@ package pl.exam.app.database;
 import java.util.Properties;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.TransactionManagement;
-import javax.ejb.TransactionManagementType;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -15,7 +13,6 @@ import org.hibernate.cfg.Configuration;
 
 import pl.exam.app.database.entities.TestEntity;
 
-@TransactionManagement(TransactionManagementType.BEAN)
 @Singleton
 public class HibernateUtil
 {

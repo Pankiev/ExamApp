@@ -11,15 +11,12 @@ import lombok.Data;
 import pl.exam.app.database.repositories.Identifiable;
 
 @Data
-@Entity(name = "TestEntity")
-@Table(name = "test_entities")
-public class TestEntity implements Identifiable<Integer>
+@Entity(name = "User")
+@Table(name = "users")
+public class User implements Identifiable<Integer>
 {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private Integer id;
-	
-	@Column(name = "testString", nullable = true)
-	private String testString = "It works!";
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Integer id;
 }
