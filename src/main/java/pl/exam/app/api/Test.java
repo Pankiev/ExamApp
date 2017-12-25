@@ -1,4 +1,4 @@
-package pl.exam.app;
+package pl.exam.app.api;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
