@@ -9,6 +9,6 @@ public class RootController
 	@GetMapping("/")
 	public String welcomePage()
 	{
-		return "welcome";
+		return "index";
 	}
 }
