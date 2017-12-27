@@ -1,0 +1,61 @@
+<!-- 
+<html>
+<body>
+<h2>Please Login!</h2>
+<form action="/j_spring_security_check" method="post" role="form">
+    Username: <input type="text" name="j_username" /><br />
+    Password: <input type="password" name="j_password" /><br />
+    <br/>
+    <input type="submit" value="Login" />
+</form>
+</body>
+</html>
+
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jstl/core">
+<h:head>
+	<h:outputStylesheet library="css" name="background.css" />
+</h:head>
+	
+	<f:event listener="#{loginBean.initErrorMessage()}" type="preRenderView" />
+
+<h:body>
+	<div style="margin: auto; width: 50%">
+		<div style="margin: auto; width: 270px; margin-top: 100px;">
+			<h:form id="loginForm" prependId="false"
+				onsubmit="this.action='/j_spring_security_check';" >
+				
+				<p:message for="j_username" display="text" style="color:red" />
+				<p:message for="j_password" display="text" style="color:red" />
+
+				<p:messages id="messages" showDetail="true" closable="true" severity="error">
+				</p:messages>
+				<p:panelGrid columns="2">
+					<p:outputLabel for="j_username" value="User:  " />
+					<p:inputText id="j_username" required="true" label="username" />
+
+					<p:outputLabel for="j_password" value="Password:  " /> 
+					<p:password id="j_password" label="password" required="true" />
+
+					<p:outputLabel for="_spring_security_remember_me"
+						value="Remember me: " />
+					<p:outputPanel>
+						<p:commandButton style="float:right" ajax="false"
+							id="submitButton" type="submit" value="Login" />
+						<p:selectBooleanCheckbox id="_spring_security_remember_me" />
+					</p:outputPanel>
+				</p:panelGrid>
+
+				
+			</h:form>
+		</div>
+	</div>
+</h:body>
+</html>
