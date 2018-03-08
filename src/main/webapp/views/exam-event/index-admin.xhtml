@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<h:outputStylesheet library="css" name="background.css" />
+</h:head>
+<h:body>
+	<div style="margin: auto; width: 50%">
+		<h:form>
+			<h1>Exam events page</h1>
+			<br />
+			<ui:repeat value="#{examEventViewer.allExamEvents}"
+				var="examEvent">
+				<p:column>
+					<h3>
+						<p:link value="#{examEvent.name}"
+							href="/exam-event/#{examEvent.id}"></p:link>&nbsp;
+						<p:outputLabel style="color:red" value="Closed" rendered="#{not examEvent.opened}" />
+						<br />
+					</h3>
+				</p:column>
+			</ui:repeat>
+		</h:form>
+	</div>
+</h:body>
+</html>

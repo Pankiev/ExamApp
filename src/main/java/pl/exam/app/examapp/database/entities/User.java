@@ -1,5 +1,6 @@
 package pl.exam.app.examapp.database.entities;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -36,10 +37,13 @@ public class User
 	private String password;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "creationDate", nullable= false)
+	@Column(name = "creation_date", nullable= false)
 	private Date creationDate = new Date(); 
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	private Set<Role> roles = new HashSet<>();
+	
+	@ManyToMany(mappedBy="users")
+	private Collection<ExamEvent> examEvents;
 	
 }

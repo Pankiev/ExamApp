@@ -1,13 +1,14 @@
-package pl.exam.app.examapp.jsf.beans;
+package pl.exam.app.examapp.jsf.beans.authentication;
 
 import java.util.Map;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-@ViewScoped
+
+@ApplicationScoped
 @ManagedBean
 public class LoginBean
 {
@@ -28,7 +29,6 @@ public class LoginBean
 	private void showErrorMessage()
 	{
 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_ERROR, "Username or password is invalid!", ""));
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, "Username or password is invalid!", "(or user is already logged in)"));
 	}
-
 }

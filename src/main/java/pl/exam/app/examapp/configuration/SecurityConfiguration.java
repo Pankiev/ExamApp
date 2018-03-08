@@ -23,13 +23,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 		auth.userDetailsService(userDetailsService);
 	}
 
-
 	@Override
 	protected void configure(HttpSecurity http) throws Exception  
 	{ 
         http
             .authorizeRequests()
-                .antMatchers("/authentication/**", "/javax.faces.resource/**", "/resources/**", "/error/**", "/debug/**", "/css/**", "/images/**").permitAll()
+                .antMatchers("/", "/authentication/**", "/javax.faces.resource/**", "/resources/**", "/error/**", "/debug/**", "/css/**", "/images/**").permitAll()
+                .antMatchers("/exam-event/**").hasAnyRole("admin", "student")
                 .anyRequest().authenticated()
             .and()
             	.formLogin().loginPage("/authentication/login")
@@ -42,6 +42,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
                 .logout().logoutSuccessUrl("/")
             .and()
             	.csrf().disable() 
-            .exceptionHandling().accessDeniedPage("/error/index");
+            .exceptionHandling().accessDeniedPage("/denied/index")
+            .and()
+            	.sessionManagement().maximumSessions(1).maxSessionsPreventsLogin(true);
+            
 	}
 }

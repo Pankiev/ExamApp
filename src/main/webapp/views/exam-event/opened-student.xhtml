@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<h:outputStylesheet library="css" name="background.css" />
+	<f:metadata>
+		<f:viewParam name="examEventId"
+			value="#{openedEventLobby.examEventId}" />
+	</f:metadata>
+</h:head>
+<h:body>
+	<div style="margin: auto; width: 50%">
+		<h:form id="mainForm">
+			<h1>Event opened page</h1>
+			Users:
+			<br />
+			<p:outputPanel id="usersList">
+				<p:dataTable var="user" value="#{openedEventLobby.users}">
+					<p:column>
+					#{user}
+				</p:column>
+					<br />
+				</p:dataTable>
+			</p:outputPanel>
+			<p:commandButton id="actionButton" update=":mainForm" value="Join"
+				rendered="#{not openedEventLobby.isUserAlreadyInLobby()}"
+				actionListener="#{openedEventLobby.addUser()}">
+				<f:param name="examEventId" value="#{examEvent.id}" />
+			</p:commandButton>
+			<p:commandButton update=":mainForm" value="Leave"
+				rendered="#{openedEventLobby.isUserAlreadyInLobby()}"
+				actionListener="#{openedEventLobby.removeUser()}">
+			</p:commandButton>
+			<br />
+			<p:remoteCommand name="updateUsers" update=":mainForm" />
+			<p:socket onMessage="updateForm" channel="/lobby" />
+			<p:socket onMessage="proceedToExam" channel="/lobby_start" />
+		</h:form>
+	</div>
+	<script type="text/javascript">
+		function updateForm(data) {
+			updateUsers();
+			console.log("Users upated");
+		}
+		function proceedToExam(data) {
+			console.log("Proceeding to exam...");
+			window.location.reload();
+		}
+	</script>
+</h:body>
+</html>

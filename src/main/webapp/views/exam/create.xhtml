@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<h:outputStylesheet library="css" name="background.css" />
+</h:head>
+<h:body>
+	<div style="margin: auto; width: 50%">
+		<h1>Create exam page</h1>
+		<h:form id="mainForm">
+			Exam name: <br />
+			<p:inputText id="examNameInput" value="#{examCreator.examName}"
+				name="name"></p:inputText>
+			<br />
+			Questions:
+			<p:outputPanel id="questions">
+
+				<p:dataTable value="#{examCreator.questions}" var="question">
+					<p:column> 
+						<p:inputText value="#{question.question}" />
+						<p:commandButton style="float:right;" value="Add answer"
+							update="answers"
+							actionListener="#{examCreator.addQuestionAnswer(question)}"></p:commandButton>
+						<br />
+						Time for question
+						<p:inputNumber id="secondsForQuestion" size="2"
+							value="#{question.secondsForAnswer}" symbol="s"
+							symbolPosition="s" decimalPlaces="0">
+						</p:inputNumber>
+						<p:outputPanel id="answers">
+							<ui:repeat value="#{question.answers}" var="answer">
+								<p:inputText id="answer" value="#{answer.answer}">
+									<p:ajax event="blur" update="@this" />
+								</p:inputText>
+								Is valid: 
+								<p:selectBooleanCheckbox value="#{answer.valid}">
+									<p:ajax update="@parent:@parent:answers"
+										listener="#{examCreator.selectAnswer(question, answer)}" />
+								</p:selectBooleanCheckbox>
+
+								<p:commandButton style="float:right"
+									update="@parent:@parent:answers" value="Remove"
+									actionListener="#{examCreator.removeAnswer(question, answer)}"></p:commandButton>
+								<br />
+							</ui:repeat>
+						</p:outputPanel>
+
+					</p:column>
+					<p:column>
+						<p:commandButton update=":mainForm:questions" value="Remove"
+							actionListener="#{examCreator.removeQuestion(question)}"></p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</p:outputPanel>
+			<p:commandButton update="questions" value="Add question"
+				actionListener="#{examCreator.addQuestion()}"></p:commandButton>
+			<p:messages id="messages" showDetail="true" closable="true" />
+			<p:commandButton value="Save" update="messages"
+				actionListener="#{examCreator.save()}"></p:commandButton>
+		</h:form>
+	</div>
+</h:body>
+</html>

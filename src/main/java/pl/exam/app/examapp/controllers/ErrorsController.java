@@ -14,8 +14,8 @@ public class ErrorsController implements ErrorController
 	public String errorView()
 	{
 		return "404/index";
-	} 
-
+	}
+ 
 	@Override
 	public String getErrorPath()
 	{
