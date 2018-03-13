@@ -1,7 +1,7 @@
 package pl.exam.app.examapp.jsf.beans.exam.event;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.annotation.ManagedBean;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Component;

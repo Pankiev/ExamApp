@@ -5,10 +5,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
 
+import javax.annotation.ManagedBean;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Component;

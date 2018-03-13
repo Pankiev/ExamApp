@@ -3,10 +3,9 @@ package pl.exam.app.examapp.jsf.beans.authentication;
 import java.util.Map;
 
 import javax.annotation.ManagedBean;
+import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ApplicationScoped;
 import javax.faces.context.FacesContext;
-
 
 @ManagedBean
 @ApplicationScoped
