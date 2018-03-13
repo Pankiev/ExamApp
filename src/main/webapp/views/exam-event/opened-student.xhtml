@@ -9,9 +9,11 @@
 
 <h:head>
 	<h:outputStylesheet library="css" name="background.css" />
+	<h:outputScript library="js" name="websocket.js"></h:outputScript>
+	<h:outputScript library="js" name="sockjs.min.js"></h:outputScript>
+	<h:outputScript library="js" name="stomp.min.js"></h:outputScript>
 	<f:metadata>
-		<f:viewParam name="examEventId"
-			value="#{openedEventLobby.examEventId}" />
+		<f:event type="preRenderView" listener="#{openedEventLobby.setExamEventId(examEvent.id)}" />
 	</f:metadata>
 </h:head>
 <h:body>
@@ -31,7 +33,6 @@
 			<p:commandButton id="actionButton" update=":mainForm" value="Join"
 				rendered="#{not openedEventLobby.isUserAlreadyInLobby()}"
 				actionListener="#{openedEventLobby.addUser()}">
-				<f:param name="examEventId" value="#{examEvent.id}" />
 			</p:commandButton>
 			<p:commandButton update=":mainForm" value="Leave"
 				rendered="#{openedEventLobby.isUserAlreadyInLobby()}"
@@ -39,19 +40,21 @@
 			</p:commandButton>
 			<br />
 			<p:remoteCommand name="updateUsers" update=":mainForm" />
-			<p:socket onMessage="updateForm" channel="/lobby" />
-			<p:socket onMessage="proceedToExam" channel="/lobby_start" />
+
+			<p:commandButton type="button" value="Connect" onclick="connect();"></p:commandButton>
+			<p:commandButton type="button" value="Send message" onclick="stompClient.sendMessage()"></p:commandButton>
+			<p:commandButton type="button" value="Disconnect" onclick="stompClient.disconnect();"></p:commandButton>
 		</h:form>
 	</div>
 	<script type="text/javascript">
-		function updateForm(data) {
-			updateUsers();
-			console.log("Users upated");
-		}
-		function proceedToExam(data) {
-			console.log("Proceeding to exam...");
-			window.location.reload();
-		}
-	</script>
+	var stompClient = null;
+	function connect() {
+	    stompClient = new StompClient('/lobby/update', updateUsers);
+	}
+	function proceedToExam(data) {
+	    console.log("Proceeding to exam...");
+	    window.location.reload();
+	}
+    </script>
 </h:body>
 </html>

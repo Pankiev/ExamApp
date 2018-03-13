@@ -9,10 +9,11 @@
 
 <h:head>
 	<h:outputStylesheet library="css" name="background.css" />
+	<h:outputScript library="js" name="websocket.js"></h:outputScript>
+	<h:outputScript library="js" name="sockjs.min.js"></h:outputScript>
+	<h:outputScript library="js" name="stomp.min.js"></h:outputScript>
 	<f:metadata>
-		<f:viewParam name="examEventId"
-			value="#{openedEventLobby.examEventId}" />
-		<f:param name="examEventId" value="#{examEvent.id}" />
+		<f:event type="preRenderView" listener="#{openedEventLobby.setExamEventId(examEvent.id)}" />
 	</f:metadata>
 </h:head>
 <h:body>
@@ -31,23 +32,26 @@
 			</p:outputPanel>
 
 			<p:commandButton value="Start"
-				actionListener="#{openedEventLobby.start()}" oncomplete="reloadPage"></p:commandButton>
+				actionListener="#{openedEventLobby.start()}"
+				oncomplete="reloadPage()"></p:commandButton>
 			<br />
-			<p:remoteCommand name="updateUsers"
-				actionListener="#{openedEventLobby.messageHandled()}"
-				update=":mainForm" />
-			<p:socket onMessage="handleMessage" channel="/lobby" />
+			<p:remoteCommand name="updateUsers" update=":mainForm" />
+			<p:commandButton type="button" value="Connect" onclick="connect();"></p:commandButton>
+			<p:commandButton type="button" value="Send message"
+				onclick="stompClient.sendMessage()"></p:commandButton>
+			<p:commandButton type="button" value="Disconnect"
+				onclick="stompClient.disconnect();"></p:commandButton>
 		</h:form>
 	</div>
 	<script type="text/javascript">
-		function handleMessage(data) {
-			updateUsers();
-			console.log(data);
-		}
-		function reloadPage() {
-			console.log('reloading page...');
-			location.reload();
-		}
-	</script>
+	var stompClient = null;
+	function connect() {
+	    stompClient = new StompClient('/lobby/update', updateUsers);
+	}
+	function reloadPage() {
+	    console.log('reloading page...');
+	    location.reload();
+	}
+    </script>
 </h:body>
 </html>

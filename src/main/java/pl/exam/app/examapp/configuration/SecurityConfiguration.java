@@ -36,7 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 	{ 
         http
             .authorizeRequests()
-                .antMatchers("/", "/authentication/**", "/javax.faces.resource/**", "/resources/**", "/error/**", "/debug/**", "/css/**", "/images/**").permitAll()
+                .antMatchers("/", "/authentication/**", "/javax.faces.resource/**", "/resources/**", "/error/**", "/debug/**", "/images/**").permitAll()
                 .antMatchers("/exam-event/**").hasAnyRole("admin", "student")
                 .anyRequest().authenticated()
             .and()
@@ -49,10 +49,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
             .and()
                 .logout().logoutSuccessUrl("/")
             .and()
-            	.csrf().disable() 
+            	.csrf().disable()
             .exceptionHandling().accessDeniedPage("/denied/index")
             .and()
             	.sessionManagement().maximumSessions(1).maxSessionsPreventsLogin(true);
-            
 	}
 }

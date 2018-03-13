@@ -96,9 +96,4 @@ public class OpenedEventLobby
 	private void broadcast(String channel, String message)
 	{
 	}
-	
-	public void messageHandled()
-	{
-		System.out.println("Message handled!");
-	}
 }
