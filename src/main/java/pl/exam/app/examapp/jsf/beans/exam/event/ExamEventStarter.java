@@ -21,7 +21,7 @@ public class ExamEventStarter
 	
 	public void open()
 	{
-		ExamEvent examEvent = examEventRepository.findOne(examEventId);
+		ExamEvent examEvent = examEventRepository.findById(examEventId).get();
 		examEvent.setOpened(true);
 		examEventRepository.save(examEvent);
 	} 

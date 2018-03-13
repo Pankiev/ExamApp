@@ -3,6 +3,7 @@ package pl.exam.app.examapp.jsf.beans.exam.event;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Optional;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -50,8 +51,9 @@ public class ExamEventCreator
 	{
 		try
 		{
-			examEvent.setExam(examRepository.findOne(choosenExamId));
-			if(examEvent.getExam() == null)
+			Optional<Exam> exam = examRepository.findById(choosenExamId);
+			examEvent.setExam(exam.orElse(null));
+			if(!exam.isPresent())
 			{
 				showErrorMessage("You must choose exam!");
 				return;

@@ -2,14 +2,14 @@ package pl.exam.app.examapp.jsf.beans.authentication;
 
 import java.util.Map;
 
+import javax.annotation.ManagedBean;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ApplicationScoped;
-import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
 
-@ApplicationScoped
 @ManagedBean
+@ApplicationScoped
 public class LoginBean
 {
 	public void initErrorMessage()

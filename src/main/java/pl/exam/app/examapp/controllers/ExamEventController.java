@@ -36,7 +36,7 @@ public class ExamEventController
 	@GetMapping("/{id}")
 	public String show(@PathVariable("id") Integer id, ModelMap model, SecurityContextHolderAwareRequestWrapper authentication)
 	{
-		ExamEvent examEvent = examEventRepository.findOne(id);
+		ExamEvent examEvent = examEventRepository.findById(id).get();
 		model.addAttribute("examEvent", examEvent);
 		if(authentication.isUserInRole("admin"))
 			return pathForAdmin(examEvent);

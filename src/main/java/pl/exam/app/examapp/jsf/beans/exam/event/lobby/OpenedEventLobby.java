@@ -9,26 +9,18 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
-import org.primefaces.push.EventBus;
-import org.primefaces.push.EventBusFactory;
 import org.springframework.stereotype.Component;
 
 import pl.exam.app.examapp.database.entities.ExamEvent;
 import pl.exam.app.examapp.database.repositories.ExamEventRepository;
-import pl.exam.app.examapp.database.repositories.UserRepository;
 
 @ManagedBean
 @Component
 @ApplicationScoped
 public class OpenedEventLobby
 {
-	EventBus eventBus = EventBusFactory.getDefault().eventBus();
-	
 	@Inject
 	private ExamEventRepository examEventRepository;
-	
-	@Inject
-	private UserRepository userRepository;
 	
 	private Integer examEventId;
 	
@@ -39,7 +31,7 @@ public class OpenedEventLobby
 	public void addUser()
 	{
 		if(examEvent == null)
-			examEvent = examEventRepository.findOne(examEventId);
+			examEvent = examEventRepository.findById(examEventId).get();
 		
 		if(!userIsInRole("student"))
 			return;
@@ -52,7 +44,7 @@ public class OpenedEventLobby
 	
 	public void start()
 	{
-		ExamEvent examEvent = examEventRepository.findOne(examEventId);
+		ExamEvent examEvent = examEventRepository.findById(examEventId).get();
 		examEvent.setOpened(false);
 		examEvent.setStarted(true);
 		examEvent.setStartDate(new Date());
@@ -103,10 +95,6 @@ public class OpenedEventLobby
 	
 	private void broadcast(String channel, String message)
 	{
-//		Broadcaster broadcaster = new SimpleBroadcaster();
-//		
-//		broadcaster.broadcast("");
-	    eventBus.publish(channel, message);
 	}
 	
 	public void messageHandled()

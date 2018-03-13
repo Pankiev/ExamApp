@@ -33,7 +33,7 @@ public class ExamController
 	@GetMapping("/{id}")
 	public String examShow(@PathVariable("id") Integer examId, ModelMap model)
 	{
-		Exam exam = examRepository.findOne(examId);
+		Exam exam = examRepository.findById(examId).get();
 		model.addAttribute("exam", exam);
 		return "exam/show";
 	}
