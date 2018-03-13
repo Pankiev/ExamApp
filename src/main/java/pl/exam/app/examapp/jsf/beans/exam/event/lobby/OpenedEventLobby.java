@@ -9,8 +9,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
-import org.atmosphere.cpr.Broadcaster;
-import org.atmosphere.util.SimpleBroadcaster;
 import org.primefaces.push.EventBus;
 import org.primefaces.push.EventBusFactory;
 import org.springframework.stereotype.Component;
@@ -24,6 +22,8 @@ import pl.exam.app.examapp.database.repositories.UserRepository;
 @ApplicationScoped
 public class OpenedEventLobby
 {
+	EventBus eventBus = EventBusFactory.getDefault().eventBus();
+	
 	@Inject
 	private ExamEventRepository examEventRepository;
 	
@@ -57,7 +57,7 @@ public class OpenedEventLobby
 		examEvent.setStarted(true);
 		examEvent.setStartDate(new Date());
 		examEventRepository.save(examEvent);
-		broadcast("/lobby_start", "W Some message");
+		broadcast("/lobby_startt", "W Some message");
 	}
 
 	private boolean userIsInRole(String role)
@@ -103,10 +103,9 @@ public class OpenedEventLobby
 	
 	private void broadcast(String channel, String message)
 	{
-		Broadcaster broadcaster = new SimpleBroadcaster();
-		
-		broadcaster.broadcast("");
-		EventBus eventBus = EventBusFactory.getDefault().eventBus();
+//		Broadcaster broadcaster = new SimpleBroadcaster();
+//		
+//		broadcaster.broadcast("");
 	    eventBus.publish(channel, message);
 	}
 	
