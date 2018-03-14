@@ -1,5 +1,6 @@
 package pl.exam.app.examapp.configuration;
 
+import org.springframework.boot.autoconfigure.web.ResourceProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -24,9 +25,11 @@ public class WebConfiguration implements WebMvcConfigurer
 		return viewResolver;
 	}
 
+
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry)
 	{
 		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+		registry.addResourceHandler("/**").addResourceLocations(new ResourceProperties().getStaticLocations());
 	}
 }

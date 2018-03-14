@@ -18,6 +18,7 @@ import pl.exam.app.examapp.database.entities.User;
 import pl.exam.app.examapp.database.repositories.UserRepository;
 
 @Configuration
+@CustomAuthentication
 public class AuthenticationConfiguration implements UserDetailsService
 {
 	@Autowired

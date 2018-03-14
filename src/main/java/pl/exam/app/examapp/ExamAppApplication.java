@@ -14,7 +14,7 @@ public class ExamAppApplication extends SpringBootServletInitializer
 	{
 		return builder
 				.sources(ExamAppApplication.class)
-				.bannerMode(Banner.Mode.CONSOLE);		
+				.bannerMode(Banner.Mode.CONSOLE);
 	}
 
 	public static void main(String[] args)

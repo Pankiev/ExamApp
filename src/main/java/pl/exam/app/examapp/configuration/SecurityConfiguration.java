@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 {
 	@Autowired
+	@CustomAuthentication
 	private UserDetailsService userDetailsService;
 
 	@Autowired
@@ -36,7 +37,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 	{ 
         http
             .authorizeRequests()
-                .antMatchers("/", "/authentication/**", "/javax.faces.resource/**", "/resources/**", "/error/**", "/debug/**", "/images/**").permitAll()
+                .antMatchers("/", "/authentication/**", "/javax.faces.resource/**", "/css/**", "/images/**", "/js/**", "/error/**", "/debug/**").permitAll()
                 .antMatchers("/exam-event/**").hasAnyRole("admin", "student")
                 .anyRequest().authenticated()
             .and()

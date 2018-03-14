@@ -8,10 +8,10 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<h:outputStylesheet library="css" name="background.css" />
-	<h:outputScript library="js" name="websocket.js"></h:outputScript>
-	<h:outputScript library="js" name="sockjs.min.js"></h:outputScript>
-	<h:outputScript library="js" name="stomp.min.js"></h:outputScript>
+	<link rel="stylesheet" type="text/css" href="/css/background.css"/>
+	<script type="application/javascript" src="/js/websocket.js"></script>
+	<script type="application/javascript" src="/js/sockjs.min.js"></script>
+	<script type="application/javascript" src="/js/stomp.min.js"></script>
 	<f:metadata>
 		<f:event type="preRenderView" listener="#{openedEventLobby.setExamEventId(examEvent.id)}" />
 	</f:metadata>
@@ -41,9 +41,9 @@
 			<br />
 			<p:remoteCommand name="updateUsers" update=":mainForm" />
 
-			<p:commandButton type="button" value="Connect" onclick="connect();"></p:commandButton>
-			<p:commandButton type="button" value="Send message" onclick="stompClient.sendMessage()"></p:commandButton>
-			<p:commandButton type="button" value="Disconnect" onclick="stompClient.disconnect();"></p:commandButton>
+			<p:commandButton type="button" value="Connect" onclick="connect();"/>
+			<p:commandButton type="button" value="Send message" onclick="stompClient.sendMessage()"/>
+			<p:commandButton type="button" value="Disconnect" onclick="stompClient.disconnect();"/>
 		</h:form>
 	</div>
 	<script type="text/javascript">

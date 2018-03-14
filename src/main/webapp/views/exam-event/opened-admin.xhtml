@@ -1,57 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<h:outputStylesheet library="css" name="background.css" />
-	<h:outputScript library="js" name="websocket.js"></h:outputScript>
-	<h:outputScript library="js" name="sockjs.min.js"></h:outputScript>
-	<h:outputScript library="js" name="stomp.min.js"></h:outputScript>
-	<f:metadata>
-		<f:event type="preRenderView" listener="#{openedEventLobby.setExamEventId(examEvent.id)}" />
-	</f:metadata>
+
+    <link rel="stylesheet" type="text/css" href="/css/background.css"/>
+    <script type="application/javascript" src="/js/websocket.js"></script>
+    <script type="application/javascript" src="/js/sockjs.min.js"></script>
+    <script type="application/javascript" src="/js/stomp.min.js"></script>
+    <f:metadata>
+        <f:param></f:param>
+        <f:event type="preRenderView" listener="#{openedEventLobby.setExamEventId(examEvent.id)}"/>
+    </f:metadata>>
 </h:head>
 <h:body>
-	<div style="margin: auto; width: 50%">
-		<h:form id="mainForm">
-			<h1>Event opened page</h1>
-			Users:
-			<br />
-			<p:outputPanel id="usersList">
-				<p:dataTable var="user" value="#{openedEventLobby.users}">
-					<p:column>
-					#{user}
-				</p:column>
-					<br />
-				</p:dataTable>
-			</p:outputPanel>
+    <div style="margin: auto; width: 50%">
+        <h:form id="mainForm">
+            <h1>Event opened page</h1>
+            Users:
+            <br/>
+            <p:outputPanel id="usersList">
+                <p:dataTable var="user" value="#{openedEventLobby.users}">
+                    <p:column>
+                        #{user}
+                    </p:column>
+                    <br/>
+                </p:dataTable>
+            </p:outputPanel>
 
-			<p:commandButton value="Start"
-				actionListener="#{openedEventLobby.start()}"
-				oncomplete="reloadPage()"></p:commandButton>
-			<br />
-			<p:remoteCommand name="updateUsers" update=":mainForm" />
-			<p:commandButton type="button" value="Connect" onclick="connect();"></p:commandButton>
-			<p:commandButton type="button" value="Send message"
-				onclick="stompClient.sendMessage()"></p:commandButton>
-			<p:commandButton type="button" value="Disconnect"
-				onclick="stompClient.disconnect();"></p:commandButton>
-		</h:form>
-	</div>
-	<script type="text/javascript">
-	var stompClient = null;
-	function connect() {
-	    stompClient = new StompClient('/lobby/update', updateUsers);
-	}
-	function reloadPage() {
-	    console.log('reloading page...');
-	    location.reload();
-	}
+            <p:commandButton value="Start"
+                             actionListener="#{openedEventLobby.start()}"
+                             oncomplete="reloadPage()"></p:commandButton>
+            <br/>
+            <p:remoteCommand name="updateUsers" update=":mainForm"/>
+            <p:commandButton type="button" value="Connect" onclick="connect();"></p:commandButton>
+            <p:commandButton type="button" value="Send message"
+                             onclick="stompClient.sendMessage()"></p:commandButton>
+            <p:commandButton type="button" value="Disconnect"
+                             onclick="stompClient.disconnect();"></p:commandButton>
+        </h:form>
+    </div>
+    <script type="text/javascript">
+        var stompClient = null;
+
+        function connect() {
+            stompClient = new StompClient('/lobby/update', updateUsers);
+        }
+
+        function reloadPage() {
+            console.log('reloading page...');
+            location.reload();
+        }
     </script>
 </h:body>
 </html>

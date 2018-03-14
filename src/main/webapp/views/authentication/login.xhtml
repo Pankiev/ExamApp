@@ -5,8 +5,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
-	<h:outputStylesheet library="css" name="background.css" />
-
+	<link rel="stylesheet" type="text/css" href="/css/background.css" />
 	<f:event listener="#{loginBean.initErrorMessage()}"
 		type="preRenderView" />
 </h:head>
@@ -35,9 +34,9 @@
 						value="Remember me: " />
 					<p:outputPanel>
 						<p:commandButton id="adminCredentials" value="Admin"
-							onclick="useAdminCredentials();" type="button"></p:commandButton>
+							onclick="useAdminCredentials();" type="button"/>
 						<p:commandButton id="studentCredentials" value="Student"
-							type="button" onclick="useStudentCredentials();"></p:commandButton>
+							type="button" onclick="useStudentCredentials();"/>
 						<p:commandButton style="float:right" id="submitButton"
 							ajax="false" type="submit" value="Login" />
 						<p:selectBooleanCheckbox id="_spring_security_remember_me" />

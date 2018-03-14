@@ -1,9 +1,6 @@
 package pl.exam.app.examapp.jsf.beans.exam.event;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Optional;
+import java.util.*;
 
 import javax.annotation.ManagedBean;
 import javax.faces.application.FacesMessage;
@@ -38,12 +35,12 @@ public class ExamEventCreator
 	
 	@Getter
 	@Setter
-	private Integer choosenExamId;
+	private Integer chosenExamId;
 	
 	public Collection<Exam> getExams()
 	{ 
 		ArrayList<Exam> exams = Lists.newArrayList(examRepository.findAll());
-		Collections.sort(exams, (e1, e2) -> e1.getName().compareTo(e2.getName()));
+		exams.sort(Comparator.comparing(Exam::getName));
 		return exams;
 	}
 	
@@ -51,7 +48,7 @@ public class ExamEventCreator
 	{
 		try
 		{
-			Optional<Exam> exam = examRepository.findById(choosenExamId);
+			Optional<Exam> exam = examRepository.findById(chosenExamId);
 			examEvent.setExam(exam.orElse(null));
 			if(!exam.isPresent())
 			{

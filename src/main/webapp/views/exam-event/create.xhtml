@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
+<html xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<h:outputStylesheet library="css" name="background.css" />
+	<link rel="stylesheet" type="text/css" href="/css/background.css" />
 </h:head>
 <h:body>
 	<div style="margin: auto; width: 50%">
@@ -19,9 +17,9 @@
 					<p:outputLabel value="Exam event" />
 				</h2>
 				Name: <br/>
-				<p:inputText value="#{examEventCreator.examEvent.name}"></p:inputText><br/>
+				<p:inputText value="#{examEventCreator.examEvent.name}"/><br/>
 				Exam:<br/>
-				<h:selectOneMenu id="exam" value="#{examEventCreator.choosenExamId}"
+				<h:selectOneMenu id="exam" value="#{examEventCreator.chosenExamId}"
 					style="width:150px">
 					<f:selectItem itemLabel="Select Exam" itemValue=""
 						noSelectionOption="true" />
@@ -32,7 +30,7 @@
 				<p:messages id="messages" showDetail="true" closable="true" />
 				<br/>
 				<p:commandButton value="Create" update="messages"
-					actionListener="#{examEventCreator.save()}"></p:commandButton>
+					actionListener="#{examEventCreator.save()}"/>
 				<p:separator />
 			</p:panel>
 		</h:form>
