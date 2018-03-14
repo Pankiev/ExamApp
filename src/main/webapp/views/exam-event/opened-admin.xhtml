@@ -34,26 +34,20 @@
 
             <p:commandButton value="Start"
                              actionListener="#{openedEventLobby.start()}"
-                             oncomplete="reloadPage()"></p:commandButton>
+                             oncomplete="sendStartLobbyMessage(); reloadPage();"></p:commandButton>
             <br/>
             <p:remoteCommand name="updateUsers" update=":mainForm"/>
-            <p:commandButton type="button" value="Connect" onclick="connect();"></p:commandButton>
-            <p:commandButton type="button" value="Send message"
-                             onclick="stompClient.sendMessage()"></p:commandButton>
-            <p:commandButton type="button" value="Disconnect"
-                             onclick="stompClient.disconnect();"></p:commandButton>
         </h:form>
     </div>
     <script type="text/javascript">
-        var stompClient = null;
-
-        function connect() {
-            stompClient = new StompClient('/lobby/update', updateUsers);
-        }
-
+        var startLobby = new StompSender('/lobby/start');
+        new StompReceiver('/lobby/update', updateUsers);
         function reloadPage() {
             console.log('reloading page...');
             location.reload();
+        }
+        function sendStartLobbyMessage(){
+            startLobby.sendMessage();
         }
     </script>
 </h:body>

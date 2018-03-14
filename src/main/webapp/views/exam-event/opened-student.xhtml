@@ -4,7 +4,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
@@ -32,29 +31,23 @@
 			</p:outputPanel>
 			<p:commandButton id="actionButton" update=":mainForm" value="Join"
 				rendered="#{not openedEventLobby.isUserAlreadyInLobby()}"
-				actionListener="#{openedEventLobby.addUser()}">
+				actionListener="#{openedEventLobby.addUser()}" oncomplete="updateBroadcaster.sendMessage()">
 			</p:commandButton>
 			<p:commandButton update=":mainForm" value="Leave"
 				rendered="#{openedEventLobby.isUserAlreadyInLobby()}"
-				actionListener="#{openedEventLobby.removeUser()}">
+				actionListener="#{openedEventLobby.removeUser()}" oncomplete="updateBroadcaster.sendMessage()">
 			</p:commandButton>
 			<br />
 			<p:remoteCommand name="updateUsers" update=":mainForm" />
-
-			<p:commandButton type="button" value="Connect" onclick="connect();"/>
-			<p:commandButton type="button" value="Send message" onclick="stompClient.sendMessage()"/>
-			<p:commandButton type="button" value="Disconnect" onclick="stompClient.disconnect();"/>
 		</h:form>
 	</div>
 	<script type="text/javascript">
-	var stompClient = null;
-	function connect() {
-	    stompClient = new StompClient('/lobby/update', updateUsers);
-	}
-	function proceedToExam(data) {
-	    console.log("Proceeding to exam...");
-	    window.location.reload();
-	}
+        new StompReceiver('/lobby/update', updateUsers);
+        new StompReceiver('/lobby/start', proceedToExam)
+        var updateBroadcaster = new StompSender('/lobby/update');
+		function proceedToExam(data) {
+			window.location.reload();
+		}
     </script>
 </h:body>
 </html>

@@ -9,6 +9,11 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
+import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.core.MessageSendingOperations;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.support.ExecutorSubscribableChannel;
 import org.springframework.stereotype.Component;
 
 import pl.exam.app.examapp.database.entities.ExamEvent;
@@ -21,7 +26,7 @@ public class OpenedEventLobby
 {
 	@Inject
 	private ExamEventRepository examEventRepository;
-	
+
 	private Integer examEventId;
 	
 	private ExamEvent examEvent;
@@ -38,7 +43,6 @@ public class OpenedEventLobby
 		
 		String nickname = getNickname();
 		usersInLobby.put(nickname, nickname);
-		updateForm();	
 	}
 	
 	
@@ -49,7 +53,6 @@ public class OpenedEventLobby
 		examEvent.setStarted(true);
 		examEvent.setStartDate(new Date());
 		examEventRepository.save(examEvent);
-		broadcast("/lobby_startt", "W Some message");
 	}
 
 	private boolean userIsInRole(String role)
@@ -85,15 +88,5 @@ public class OpenedEventLobby
 	public void removeUser()
 	{
 		usersInLobby.remove(getNickname());
-		updateForm();	
-	}
-
-	private void updateForm()
-	{
-		broadcast("/lobby", "Some message");
-	}
-	
-	private void broadcast(String channel, String message)
-	{
 	}
 }
