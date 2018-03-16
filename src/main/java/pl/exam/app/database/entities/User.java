@@ -34,6 +34,12 @@ public class User
 	
 	@Column(name = "password", nullable=false)
 	private String password;
+
+	@Column(name = "schoolClass")
+	private String schoolClass;
+
+	@Column(name = "idInClass")
+	private Integer idInClass;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "creation_date", nullable= false)
