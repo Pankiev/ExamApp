@@ -1,21 +1,25 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
-	<h:head>
-		<link rel="stylesheet" type="text/css" href="/css/background.css" />
-		<link rel="stylesheet" type="text/css" href="/css/404.css" />
-	</h:head>
-	<h:body>
-		<div id="background">
-			<div id="Background"><p:graphicImage value="/images/404/Background.png" /></div>
-			<div id="AltBackground"><p:graphicImage value="/images/404/AltBackground.png" /></div>
-			<div id="Wearesorrybutthepage"><p:graphicImage value="/images/404/Wearesorrybutthepage.png" /></div>
-			<div id="Shadow44"><p:graphicImage value="/images/404/Shadow44.png" /></div>
-			<div id="ShadowO"><p:graphicImage value="/images/404/ShadowO.png" /></div>
-			<div id="layer_404"><p:graphicImage value="/images/404/layer_404.png" /></div>
-			<div id="HighlightIregular"><p:graphicImage value="/images/404/HighlightIregular.png" /></div>
-			<div id="DarkEdge"><p:graphicImage value="/images/404/DarkEdge.png" /></div>
-		</div>
- </h:body>
- </html>
+<ui:composition template="../common/template.xhtml">
+    <ui:define name="head">
+        <link rel="stylesheet" type="text/css" href="/css/404.css"/>
+    </ui:define>
+    <ui:define name="content">
+        <div id="background">
+            <div id="Background"><p:graphicImage value="/images/404/Background.png"/></div>
+            <div id="AltBackground"><p:graphicImage value="/images/404/AltBackground.png"/></div>
+            <div id="Wearesorrybutthepage"><p:graphicImage value="/images/404/Wearesorrybutthepage.png"/></div>
+            <div id="Shadow44"><p:graphicImage value="/images/404/Shadow44.png"/></div>
+            <div id="ShadowO"><p:graphicImage value="/images/404/ShadowO.png"/></div>
+            <div id="layer_404"><p:graphicImage value="/images/404/layer_404.png"/></div>
+            <div id="HighlightIregular"><p:graphicImage value="/images/404/HighlightIregular.png"/></div>
+            <div id="DarkEdge"><p:graphicImage value="/images/404/DarkEdge.png"/></div>
+        </div>
+    </ui:define>
+</ui:composition>
+</html>
+
