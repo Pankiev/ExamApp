@@ -3,18 +3,22 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
-<ui:composition template="common/template.xhtml">
-    <ui:define name="content">
+
+<h:head>
+    <link rel="stylesheet" type="text/css" href="/css/background.css" />
+
+</h:head>
+<h:body>
+    <div style="margin: auto; width: 50%">
         <h:form>
             <h1>
                 Exam app
             </h1>
 
             <p:link href="exam/index" value="Create exam definition"/>
-            <br/>
+            <br />
         </h:form>
-    </ui:define>
-</ui:composition>
+    </div>
+</h:body>
 </html>
