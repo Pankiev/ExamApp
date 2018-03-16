@@ -28,9 +28,6 @@ public class Exam
 	@Column(name = "name", nullable = false, unique = true)
 	private String name;
 	
-	@OneToMany(mappedBy="exam")
-	private Collection<ExamEvent> examEvents;
-	
 	@OneToMany(mappedBy="exam", cascade=CascadeType.ALL)
 	private Collection<Question> questions;
 }

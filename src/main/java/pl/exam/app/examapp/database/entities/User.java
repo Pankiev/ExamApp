@@ -1,6 +1,5 @@
 package pl.exam.app.examapp.database.entities;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -42,8 +41,4 @@ public class User
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	private Set<Role> roles = new HashSet<>();
-	
-	@ManyToMany(mappedBy="users")
-	private Collection<ExamEvent> examEvents;
-	
 }
