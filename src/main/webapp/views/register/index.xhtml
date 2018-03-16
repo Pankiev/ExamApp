@@ -7,13 +7,27 @@
       xmlns:p="http://primefaces.org/ui">
 <ui:composition template="../common/template.xhtml">
     <ui:define name="content">
-        <h:form>
-            <h1>
-                Exam app
-            </h1>
+        <h:form id="registerForm">
+            <div style="margin: auto; width: 270px; margin-top: 100px;">
+                <p:messages id="messages" autoUpdate="true" />
+                <p:panelGrid columns="2">
+                    <p:outputLabel for="username" value="User:  "/>
+                    <p:inputText id="username" value="#{registerBean.username}" required="true"
+                                 requiredMessage="username required" label="username"/>
 
-            <p:link href="exam/index" value="Create exam definition"/>
-            <br/>
+                    <p:outputLabel for="password" value="Password: "/>
+                    <p:password id="password" value="#{registerBean.password}" label="password" required="true"
+                                match="passwordRepeat"
+                                validatorMessage="Passwords should match and be between 5 and 30 characters"/>
+
+                    <p:outputLabel for="passwordRepeat" value="Repeat password: "/>
+                    <p:password id="passwordRepeat" value="#{registerBean.passwordRepeat}" label="password"
+                                required="true"/>
+                    &nbsp;
+                    <p:commandButton style="float:right;" value="Register"
+                                     actionListener="#{registerBean.register()}" oncomplete="window.location.reload();"/>
+                </p:panelGrid>
+            </div>
         </h:form>
     </ui:define>
 </ui:composition>
