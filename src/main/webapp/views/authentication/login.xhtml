@@ -1,62 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
-<h:head>
-	<link rel="stylesheet" type="text/css" href="/css/background.css" />
-	<f:event listener="#{loginBean.initErrorMessage()}"
-		type="preRenderView" />
-</h:head>
-<h:body>
-	<div style="margin: auto; width: 50%">
-		<div style="margin: auto; width: 270px; margin-top: 100px;">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition template="../common/template.xhtml">
+    <ui:define name="head">
+        <f:event listener="#{loginBean.initErrorMessage()}"
+                 type="preRenderView"/>
+    </ui:define>
+    <ui:define name="content">
+        <div style="margin: auto; width: 270px; margin-top: 100px;">
 
 
-			<h:form id="loginForm" prependId="false"
-				onsubmit="this.action='/j_spring_security_check';">
+            <h:form id="loginForm" prependId="false"
+                    onsubmit="this.action='/j_spring_security_check';">
 
-				<p:message for="j_username" display="text" style="color:red" />
-				<p:message for="j_password" display="text" style="color:red" />
+                <p:message for="j_username" display="text" style="color:red"/>
+                <p:message for="j_password" display="text" style="color:red"/>
 
-				<p:messages id="messages" showDetail="true" closable="true"
-					severity="error">
-				</p:messages>
-				<p:panelGrid columns="2">
-					<p:outputLabel for="j_username" value="User:  " />
-					<p:inputText id="j_username" required="true" label="username" />
+                <p:messages id="messages" showDetail="true" closable="true"
+                            severity="error">
+                </p:messages>
+                <p:panelGrid columns="2">
+                    <p:outputLabel for="j_username" value="User:  "/>
+                    <p:inputText id="j_username" required="true" label="username"/>
 
-					<p:outputLabel for="j_password" value="Password: " />
-					<p:password id="j_password" label="password" required="true" />
+                    <p:outputLabel for="j_password" value="Password: "/>
+                    <p:password id="j_password" label="password" required="true"/>
 
-					<p:outputLabel for="_spring_security_remember_me"
-						value="Remember me: " />
-					<p:outputPanel>
-						<p:commandButton id="adminCredentials" value="Admin"
-							onclick="useAdminCredentials();" type="button"/>
-						<p:commandButton id="studentCredentials" value="Student"
-							type="button" onclick="useStudentCredentials();"/>
-						<p:commandButton style="float:right" id="submitButton"
-							ajax="false" type="submit" value="Login" />
-						<p:selectBooleanCheckbox id="_spring_security_remember_me" />
-					</p:outputPanel>
-				</p:panelGrid>
-			</h:form>
-		</div>
-	</div>
-	<script>
-		function useStudentCredentials()
-		{
-			document.getElementById("j_username").value = "student";
-			document.getElementById("j_password").value = "student";
-		}
-		
-		function useAdminCredentials()
-		{
-			document.getElementById("j_username").value = "admin";
-			document.getElementById("j_password").value = "admin";
-		}
-	</script>
-</h:body>
+                    <p:outputLabel for="_spring_security_remember_me"
+                                   value="Remember me: "/>
+                    <p:outputPanel>
+                        <p:commandButton id="adminCredentials" value="Admin"
+                                         onclick="useAdminCredentials();" type="button"/>
+                        <p:commandButton id="studentCredentials" value="Student"
+                                         type="button" onclick="useStudentCredentials();"/>
+                        <p:commandButton style="float:right" id="submitButton"
+                                         ajax="false" type="submit" value="Login"/>
+                        <p:selectBooleanCheckbox id="_spring_security_remember_me"/>
+                    </p:outputPanel>
+                </p:panelGrid>
+            </h:form>
+        </div>
+    </ui:define>
+
+    <ui:define name="script">
+        <script type="application/javascript">
+            function useStudentCredentials() {
+                document.getElementById("j_username").value = "student";
+                document.getElementById("j_password").value = "student";
+            }
+
+            function useAdminCredentials() {
+                document.getElementById("j_username").value = "admin";
+                document.getElementById("j_password").value = "admin";
+            }
+        </script>
+    </ui:define>
+</ui:composition>
 </html>

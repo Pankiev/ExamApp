@@ -46,13 +46,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
             	.passwordParameter("j_password")
             	.failureUrl("/authentication/login?error=true")
                 .loginProcessingUrl("/j_spring_security_check")
-                .defaultSuccessUrl("/", true) 
+                .defaultSuccessUrl("/", true)
             .and()
                 .logout().logoutSuccessUrl("/")
+				.clearAuthentication(true)
+				.invalidateHttpSession(true)
             .and()
             	.csrf().disable()
             .exceptionHandling().accessDeniedPage("/denied/index")
             .and()
-            	.sessionManagement().maximumSessions(1).maxSessionsPreventsLogin(true);
+            	.sessionManagement()
+				.maximumSessions(1)
+				.maxSessionsPreventsLogin(false);
 	}
 }

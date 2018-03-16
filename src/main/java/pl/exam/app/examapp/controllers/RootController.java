@@ -14,7 +14,7 @@ public class RootController
 			return "redirect:/authentication/login";
 		if(isAdmin(securityContext))
 			return "admin-index";
-		return "redirect:/exam-event";
+		return "student-index";
 	}
  
 	private boolean isAdmin(SecurityContextHolderAwareRequestWrapper securityContext)
