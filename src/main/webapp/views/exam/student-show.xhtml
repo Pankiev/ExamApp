@@ -4,18 +4,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:p="http://primefaces.org/ui">
 <ui:composition template="../common/template.xhtml">
-    <ui:define name="head">
-        <f:metadata>
-            <f:event type="preRenderView" listener="#{examView.setExamId(exam.id)}" />
-        </f:metadata>
-    </ui:define>
     <ui:define name="content">
         <h:form>
             <h1>Exam #{exam.name}</h1>
-            <p:commandButton value="takeExam"></p:commandButton>
+            If you are sure you want to take this test now, press <p:link value="here" href="/exam/#{exam.id}/takeTest"/>.
+            You will not be able to take this test again!
         </h:form>
     </ui:define>
 </ui:composition>

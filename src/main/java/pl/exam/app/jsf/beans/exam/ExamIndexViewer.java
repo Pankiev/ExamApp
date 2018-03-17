@@ -38,7 +38,6 @@ public class ExamIndexViewer
 		return Lists.newArrayList(examRepository.findAll());
 	}
 
-
 	public Collection<Exam> getLoggedUserExams()
 	{
 		String username = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();

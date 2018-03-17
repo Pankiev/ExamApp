@@ -1,6 +1,7 @@
 package pl.exam.app.database.entities;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -36,7 +37,7 @@ public class Question
 	private Integer secondsForAnswer;
 	
 	@OneToMany(mappedBy="question", cascade=CascadeType.ALL)
-	private Collection<Answer> answers;
+	private List<Answer> answers;
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "exam_id")

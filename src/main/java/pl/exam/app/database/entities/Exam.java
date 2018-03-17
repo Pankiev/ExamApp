@@ -2,6 +2,7 @@ package pl.exam.app.database.entities;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -25,7 +26,7 @@ public class Exam
 	private String name;
 
 	@OneToMany(mappedBy = "exam", cascade = CascadeType.ALL)
-	private Collection<Question> questions;
+	private List<Question> questions;
 
 	@OneToMany(mappedBy = "key.exam")
 	private Set<UserExam> users;

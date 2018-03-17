@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import javax.annotation.ManagedBean;
 import javax.faces.application.FacesMessage;
@@ -32,7 +33,7 @@ public class ExamCreator
 	@Setter
 	private String examName = "Insert exam name.";
 	
-	private Collection<Question> questions = new ArrayList<>(Collections.singleton(createDefaultQuestion()));
+	private List<Question> questions = new ArrayList<>(Collections.singleton(createDefaultQuestion()));
 
 	private Question createDefaultQuestion()
 	{
