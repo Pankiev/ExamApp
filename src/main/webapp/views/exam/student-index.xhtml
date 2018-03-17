@@ -5,14 +5,21 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
-<ui:composition template="common/template.xhtml">
+<ui:composition template="../common/template.xhtml">
     <ui:define name="content">
         <h:form>
             <h1>
                 Exam app
             </h1>
-
             student page
+            <ui:repeat value="#{examIndexViewer.loggedUserExams}" var="exam">
+                <p:column>
+                    <h3>
+                        <p:link value="#{exam.name}" href="#{exam.id}"></p:link>
+                        <br/>
+                    </h3>
+                </p:column>
+            </ui:repeat>
             <br/>
         </h:form>
     </ui:define>

@@ -1,8 +1,9 @@
 package pl.exam.app.jsf.beans.exam;
 
 import pl.exam.app.database.entities.Exam;
-import pl.exam.app.database.entities.User;
+import pl.exam.app.database.entities.jointables.UserExam;
 import pl.exam.app.database.repositories.ExamRepository;
+import pl.exam.app.database.repositories.UserExamRepository;
 import pl.exam.app.database.repositories.UserRepository;
 
 import javax.annotation.ManagedBean;
@@ -17,13 +18,16 @@ public class ExamResultView
 {
 	private final UserRepository userRepository;
 	private final ExamRepository examRepository;
+	private final UserExamRepository userExamRepository;
 	private Integer examId;
 
 	@Inject
-	public ExamResultView(UserRepository userRepository, ExamRepository examRepository)
+	public ExamResultView(UserRepository userRepository, ExamRepository examRepository,
+			UserExamRepository userExamRepository)
 	{
 		this.userRepository = userRepository;
 		this.examRepository = examRepository;
+		this.userExamRepository = userExamRepository;
 	}
 
 	public void setExamId(Integer examId)
@@ -32,9 +36,8 @@ public class ExamResultView
 			this.examId = examId;
 	}
 
-	public Collection<User> getUsersAssignedToExam()
+	public Collection<UserExam> getUsersAssignedToExamData()
 	{
-		Optional<Exam> exam = examRepository.findById(examId);
-		return userRepository.findByExams_Key_Exam(exam.get());
+		return userExamRepository.findByKey_Exam_Id(examId);
 	}
 }

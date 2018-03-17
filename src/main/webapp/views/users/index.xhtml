@@ -12,21 +12,21 @@
             <h1>Manage users</h1>
 
             <p:messages autoUpdate="true" closable="true"/>
-            <p:dataTable var="user" value="#{userView.lazyModel}" paginator="true" rows="10"
+            <p:dataTable var="userExamData" value="#{userView.lazyModel}" paginator="true" rows="10"
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                          rowsPerPageTemplate="10,20,30" selectionMode="single" selection="#{userView.selectedUser}" id="usersTable" lazy="true">
                 <p:ajax event="rowSelect" update="@form:userDetail" oncomplete="PF('userDialog').show(); PF('userDialog').initPosition();"/>
-                <p:column filterable="false" headerText="Login" sortBy="#{user.nickname}" filterBy="#{user.nickname}">
-                    <h:outputText value="#{user.nickname}" />
+                <p:column filterable="false" headerText="Login" sortBy="#{userExamData.nickname}" filterBy="#{userExamData.nickname}">
+                    <h:outputText value="#{userExamData.nickname}" />
                 </p:column>
-                <p:column filterable="false" headerText="Class" sortBy="#{user.schoolClass}" filterBy="#{user.schoolClass}">
-                    <h:outputText value="#{user.schoolClass}" />
+                <p:column filterable="false" headerText="Class" sortBy="#{userExamData.schoolClass}" filterBy="#{userExamData.schoolClass}">
+                    <h:outputText value="#{userExamData.schoolClass}" />
                 </p:column>
-                <p:column filterable="false" headerText="Class Id" sortBy="#{user.idInClass}" filterBy="#{user.idInClass}">
-                    <h:outputText value="#{user.idInClass}" />
+                <p:column filterable="false" headerText="Class Id" sortBy="#{userExamData.idInClass}" filterBy="#{userExamData.idInClass}">
+                    <h:outputText value="#{userExamData.idInClass}" />
                 </p:column>
-                <p:column filterable="false" headerText="Creation date" sortBy="#{user.creationDate}" filterBy="#{user.creationDate}">
-                    <h:outputText value="#{user.creationDate}" />
+                <p:column filterable="false" headerText="Creation date" sortBy="#{userExamData.creationDate}" filterBy="#{userExamData.creationDate}">
+                    <h:outputText value="#{userExamData.creationDate}" />
                 </p:column>
             </p:dataTable>
 

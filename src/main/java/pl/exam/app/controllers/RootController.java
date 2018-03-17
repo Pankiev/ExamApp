@@ -14,12 +14,20 @@ public class RootController
 			return "redirect:/authentication/login";
 		if(isAdmin(securityContext))
 			return "admin-index";
-		return "student-index";
+		if(isStudent(securityContext))
+			return "exam/student-index";
+
+		return "denied/index";
 	}
  
 	private boolean isAdmin(SecurityContextHolderAwareRequestWrapper securityContext)
 	{
 		return securityContext.isUserInRole("admin");
+	}
+
+	private boolean isStudent(SecurityContextHolderAwareRequestWrapper securityContext)
+	{
+		return securityContext.isUserInRole("student");
 	}
 
 	private boolean isUserLoggedIn(SecurityContextHolderAwareRequestWrapper securityContext)

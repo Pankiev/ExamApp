@@ -36,18 +36,18 @@
                         <f:selectItems value="#{examView.schoolClasses}" />
                     </p:selectOneMenu>
                     <p:outputPanel id="users">
-                        <p:dataTable var="user" value="#{examView.selectedUsers}" >
-                            <p:column headerText="Login" sortBy="#{user.nickname}">
-                                <h:outputText value="#{user.nickname}" />
+                        <p:dataTable var="userExamData" value="#{examView.selectedUsers}" >
+                            <p:column headerText="Login" sortBy="#{userExamData.nickname}">
+                                <h:outputText value="#{userExamData.nickname}" />
                             </p:column>
-                            <p:column headerText="Class" sortBy="#{user.schoolClass}">
-                                <h:outputText value="#{user.schoolClass}" />
+                            <p:column headerText="Class" sortBy="#{userExamData.schoolClass}">
+                                <h:outputText value="#{userExamData.schoolClass}" />
                             </p:column>
-                            <p:column headerText="Class Id" sortBy="#{user.idInClass}">
-                                <h:outputText value="#{user.idInClass}" />
+                            <p:column headerText="Class Id" sortBy="#{userExamData.idInClass}">
+                                <h:outputText value="#{userExamData.idInClass}" />
                             </p:column>
-                            <p:column headerText="Creation date" sortBy="#{user.creationDate}">
-                                <h:outputText value="#{user.creationDate}" />
+                            <p:column headerText="Creation date" sortBy="#{userExamData.creationDate}">
+                                <h:outputText value="#{userExamData.creationDate}" />
                             </p:column>
                         </p:dataTable>
                         <p:commandButton value="Assign" actionListener="#{examView.assignUsersToExam()}"/>

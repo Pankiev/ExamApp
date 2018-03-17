@@ -1,6 +1,7 @@
 package pl.exam.app.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,9 +21,13 @@ public class ExamController
 	private ExamRepository examRepository;
 
 	@GetMapping({ "/", "/index" })
-	public String examIndex()
+	public String examIndex(SecurityContextHolderAwareRequestWrapper authentication)
 	{
-		return "exam/index";
+		if(authentication.isUserInRole("admin"))
+			return "exam/admin-index";
+		if(authentication.isUserInRole("student"))
+			return "exam/student-index";
+		return "denied/index";
 	}
 
 	@GetMapping("/create")
