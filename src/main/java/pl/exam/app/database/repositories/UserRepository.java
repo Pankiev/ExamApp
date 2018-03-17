@@ -20,5 +20,5 @@ public interface UserRepository extends PagingAndSortingRepository<User, Integer
 
 	Collection<User> findBySchoolClass(String schoolClass);
 
-	Collection<User> findByExams(Exam exam);
+	Collection<User> findByExams_Key_Exam(Exam exam);
 }

@@ -9,6 +9,7 @@ import javax.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
+import pl.exam.app.database.entities.jointables.UserExam;
 
 @Entity(name = "User")
 @Table(name = "users", uniqueConstraints =
@@ -42,6 +43,6 @@ public class User
 	@ManyToMany(fetch = FetchType.LAZY)
 	private Set<Role> roles = new HashSet<>();
 
-	@ManyToMany(fetch=FetchType.LAZY, mappedBy = "users")
-	private Set<Exam> exams = new HashSet<>();
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "key.user")
+	private Set<UserExam> exams;
 }

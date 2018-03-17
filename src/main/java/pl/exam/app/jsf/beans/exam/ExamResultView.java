@@ -6,7 +6,6 @@ import pl.exam.app.database.repositories.ExamRepository;
 import pl.exam.app.database.repositories.UserRepository;
 
 import javax.annotation.ManagedBean;
-import javax.faces.event.ComponentSystemEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import java.util.Collection;
@@ -36,6 +35,6 @@ public class ExamResultView
 	public Collection<User> getUsersAssignedToExam()
 	{
 		Optional<Exam> exam = examRepository.findById(examId);
-		return userRepository.findByExams(exam.get());
+		return userRepository.findByExams_Key_Exam(exam.get());
 	}
 }

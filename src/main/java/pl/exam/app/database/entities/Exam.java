@@ -8,6 +8,7 @@ import javax.persistence.*;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import pl.exam.app.database.entities.jointables.UserExam;
 
 @Table(name = "exams")
 @Entity(name = "Exam")
@@ -26,10 +27,6 @@ public class Exam
 	@OneToMany(mappedBy = "exam", cascade = CascadeType.ALL)
 	private Collection<Question> questions;
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "user_exam",
-			joinColumns = @JoinColumn(name = "exam_id", nullable = false),
-			inverseJoinColumns = @JoinColumn(name = "user_id", nullable = false)
-	)
-	private Set<User> users = new HashSet<>();
+	@OneToMany(mappedBy = "key.exam")
+	private Set<UserExam> users;
 }

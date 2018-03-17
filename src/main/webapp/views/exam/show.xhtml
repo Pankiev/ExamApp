@@ -36,7 +36,7 @@
                         <f:selectItems value="#{examView.schoolClasses}" />
                     </p:selectOneMenu>
                     <p:outputPanel id="users">
-                        <p:dataTable var="user" value="#{examView.users}" >
+                        <p:dataTable var="user" value="#{examView.selectedUsers}" >
                             <p:column headerText="Login" sortBy="#{user.nickname}">
                                 <h:outputText value="#{user.nickname}" />
                             </p:column>
