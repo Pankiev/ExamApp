@@ -41,4 +41,7 @@ public class User
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	private Set<Role> roles = new HashSet<>();
+
+	@ManyToMany(fetch=FetchType.LAZY, mappedBy = "users")
+	private Set<Exam> exams = new HashSet<>();
 }

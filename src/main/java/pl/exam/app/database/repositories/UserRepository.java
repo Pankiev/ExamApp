@@ -3,7 +3,10 @@ package pl.exam.app.database.repositories;
 import org.springframework.data.jpa.repository.Query;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
+import pl.exam.app.database.entities.Exam;
 import pl.exam.app.database.entities.User;
+
+import java.util.Collection;
 
 public interface UserRepository extends PagingAndSortingRepository<User, Integer>
 {
@@ -14,4 +17,8 @@ public interface UserRepository extends PagingAndSortingRepository<User, Integer
 
 	@Query("SELECT DISTINCT u.schoolClass FROM User u WHERE u.schoolClass <> null")
 	Iterable<String> findDistinctSchoolClasses();
+
+	Collection<User> findBySchoolClass(String schoolClass);
+
+	Collection<User> findByExams(Exam exam);
 }

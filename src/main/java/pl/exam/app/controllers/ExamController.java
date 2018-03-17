@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import pl.exam.app.database.entities.Exam;
 import pl.exam.app.database.repositories.ExamRepository;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/exam")
 public class ExamController
@@ -32,8 +34,20 @@ public class ExamController
 	@GetMapping("/{id}")
 	public String examShow(@PathVariable("id") Integer examId, ModelMap model)
 	{
-		Exam exam = examRepository.findById(examId).get();
-		model.addAttribute("exam", exam);
+		Optional<Exam> exam = examRepository.findById(examId);
+		if(!exam.isPresent())
+			return "404/index";
+		model.addAttribute("exam", exam.get());
 		return "exam/show";
+	}
+
+	@GetMapping("/{id}/result")
+	public String examResult(@PathVariable("id") Integer examId, ModelMap model)
+	{
+		Optional<Exam> exam = examRepository.findById(examId);
+		if(!exam.isPresent())
+			return "404/index";
+		model.addAttribute("exam", exam.get());
+		return "exam/result";
 	}
 }

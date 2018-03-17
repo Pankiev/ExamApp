@@ -35,8 +35,7 @@ public class UserView
 
 	public Iterable<String> getAllClasses()
 	{
-		Iterable<String> distinctSchoolClasses = userRepository.findDistinctSchoolClasses();
-		return distinctSchoolClasses;
+		return userRepository.findDistinctSchoolClasses();
 	}
 
 	public void saveSelectedUser()

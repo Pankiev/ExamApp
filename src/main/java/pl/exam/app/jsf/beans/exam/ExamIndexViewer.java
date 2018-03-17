@@ -16,11 +16,16 @@ import pl.exam.app.database.repositories.ExamRepository;
 @ManagedBean
 @Component
 @ViewScoped
-public class ExamViewer
+public class ExamIndexViewer
 {
+	private final ExamRepository examRepository;
+
 	@Inject
-	private ExamRepository examRepository;
-	
+	public ExamIndexViewer(ExamRepository examRepository)
+	{
+		this.examRepository = examRepository;
+	}
+
 	public Collection<Exam> getExams()
 	{
 		return Lists.newArrayList(examRepository.findAll());
