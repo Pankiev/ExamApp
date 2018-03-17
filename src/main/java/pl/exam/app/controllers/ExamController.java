@@ -1,7 +1,6 @@
 package pl.exam.app.controllers;
 
-import javax.inject.Inject;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,9 +14,9 @@ import pl.exam.app.database.repositories.ExamRepository;
 @RequestMapping("/exam")
 public class ExamController
 {
-	@Inject
-	private ExamRepository examRepository; 
-	
+	@Autowired
+	private ExamRepository examRepository;
+
 	@GetMapping({ "/", "/index" })
 	public String examIndex()
 	{

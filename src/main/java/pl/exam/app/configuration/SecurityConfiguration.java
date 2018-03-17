@@ -37,11 +37,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 	{ 
         http
             .authorizeRequests()
-//                .antMatchers("/", "/authentication/**", "/register/**", "/javax.faces.resource/**", "/css/**",
-//						"/images/**", "/js/**", "/error/**", "/debug/**").permitAll()
-//                .antMatchers("/exam-event/**").hasAnyRole("admin", "student")
-//				.anyRequest().authenticated()
-                .anyRequest().permitAll()
+                .antMatchers("/", "/authentication/**", "/register/**", "/javax.faces.resource/**", "/css/**",
+						"/images/**", "/js/**", "/error/**", "/debug/**").permitAll()
+				.anyRequest().hasAnyRole("admin")
+               // .anyRequest().permitAll()
             .and()
             	.formLogin().loginPage("/authentication/login")
             	.usernameParameter("j_username")

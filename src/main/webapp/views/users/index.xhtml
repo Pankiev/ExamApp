@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="../common/template.xhtml">
+    <ui:define name="content">
+        <h:form>
+            <h1>
+                Manage users
+            </h1>
+            <p:messages autoUpdate="true" closable="true"/>
+            <p:dataTable var="user" value="#{userView.lazyModel}" paginator="true" rows="10"
+                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                         rowsPerPageTemplate="10,20,30" selectionMode="single" selection="#{userView.selectedUser}" id="usersTable" lazy="true">
+                <p:ajax event="rowSelect" update="@form:userDetail" oncomplete="PF('userDialog').show(); PF('userDialog').initPosition();"/>
+                <p:column filterable="false" headerText="Login" sortBy="#{user.nickname}" filterBy="#{user.nickname}">
+                    <h:outputText value="#{user.nickname}" />
+                </p:column>
+                <p:column filterable="false" headerText="Class" sortBy="#{user.schoolClass}" filterBy="#{user.schoolClass}">
+                    <h:outputText value="#{user.schoolClass}" />
+                </p:column>
+                <p:column filterable="false" headerText="Class Id" sortBy="#{user.idInClass}" filterBy="#{user.idInClass}">
+                    <h:outputText value="#{user.idInClass}" />
+                </p:column>
+                <p:column filterable="false" headerText="Creation date" sortBy="#{user.creationDate}" filterBy="#{user.creationDate}">
+                    <h:outputText value="#{user.creationDate}" />
+                </p:column>
+            </p:dataTable>
+
+            <p:dialog header="Edit user" style="position: absolute !important;" widgetVar="userDialog" modal="false" showEffect="fade"
+                      hideEffect="fade" resizable="false" position="center center">
+                <p:outputPanel id="userDetail" style="text-align:center;">
+                    <p:panelGrid columns="2" columnClasses="label,value">
+                        <f:facet name="header">
+                            #{userView.selectedUser.nickname}
+                        </f:facet>
+
+                        <h:outputText value="Class:" />
+                        <p:selectOneMenu id="class" value="#{userView.selectedUser.schoolClass}" effect="fold" editable="true">
+                            <f:selectItems value="#{userView.getAllClasses()}" />
+                        </p:selectOneMenu>
+
+                        <h:outputText value="Class id:" />
+                        <p:inputNumber id="idInClass" value="#{userView.selectedUser.idInClass}" minValue="1" maxValue="99"/>
+                    </p:panelGrid>
+                    <p:commandButton update="@form"
+                            style="margin-top: 5px; float:left" value="Save" actionListener="#{userView.saveSelectedUser()}" />
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>

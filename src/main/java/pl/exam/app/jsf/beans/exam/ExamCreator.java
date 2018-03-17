@@ -1,5 +1,6 @@
 package pl.exam.app.jsf.beans.exam;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -69,11 +70,24 @@ public class ExamCreator
 			questions.forEach(q -> q.setExam(exam));
 			examRepository.save(exam);
 			showSaveMessage();
+			redirect(exam.getId());
 		} catch (Exception e)
 		{
-			showErrorMessage();
+			showErrorMessage("Exam could not be saved!");
 		}
 
+	}
+
+	private void redirect(Integer id)
+	{
+		String url = "/exam/" + id;
+		try
+		{
+			FacesContext.getCurrentInstance().getExternalContext().redirect(url);
+		} catch (IOException e)
+		{
+			showErrorMessage(e.getMessage());
+		}
 	}
 
 	private void showSaveMessage()
@@ -81,9 +95,9 @@ public class ExamCreator
  		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Exam definition saved"));
 	}
 	
-	private void showErrorMessage()
+	private void showErrorMessage(String message)
 	{
- 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Exam could not be saved!"));
+ 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", message));
 	}
  
 	public void addQuestionAnswer(Question question)
