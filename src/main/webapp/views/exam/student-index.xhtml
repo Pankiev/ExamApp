@@ -15,7 +15,7 @@
             <ui:repeat value="#{examIndexViewer.loggedUserExams}" var="exam">
                 <p:column>
                     <h3>
-                        <p:link value="#{exam.name}" href="#{exam.id}"></p:link>
+                        <p:link value="#{exam.name}" href="/exam/#{exam.id}"></p:link>
                         <br/>
                     </h3>
                 </p:column>

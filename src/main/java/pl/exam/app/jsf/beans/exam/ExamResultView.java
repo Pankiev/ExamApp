@@ -9,6 +9,7 @@ import pl.exam.app.database.repositories.UserRepository;
 import javax.annotation.ManagedBean;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -16,17 +17,13 @@ import java.util.Optional;
 @ViewScoped
 public class ExamResultView
 {
-	private final UserRepository userRepository;
-	private final ExamRepository examRepository;
 	private final UserExamRepository userExamRepository;
+	private final Collection<UserExam> userExams = new ArrayList<>();
 	private Integer examId;
 
 	@Inject
-	public ExamResultView(UserRepository userRepository, ExamRepository examRepository,
-			UserExamRepository userExamRepository)
+	public ExamResultView(UserExamRepository userExamRepository)
 	{
-		this.userRepository = userRepository;
-		this.examRepository = examRepository;
 		this.userExamRepository = userExamRepository;
 	}
 
@@ -38,6 +35,8 @@ public class ExamResultView
 
 	public Collection<UserExam> getUsersAssignedToExamData()
 	{
-		return userExamRepository.findByKey_Exam_Id(examId);
+		if(userExams.isEmpty())
+			userExams.addAll(userExamRepository.findByKey_Exam_Id(examId));
+		return userExams;
 	}
 }

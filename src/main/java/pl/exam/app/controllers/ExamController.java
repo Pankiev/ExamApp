@@ -37,17 +37,31 @@ public class ExamController
 	}
 	
 	@GetMapping("/{id}")
-	public String examShow(@PathVariable("id") Integer examId, ModelMap model)
+	public String examShow(@PathVariable("id") Integer examId, ModelMap model, SecurityContextHolderAwareRequestWrapper authentication)
 	{
 		Optional<Exam> exam = examRepository.findById(examId);
 		if(!exam.isPresent())
 			return "404/index";
 		model.addAttribute("exam", exam.get());
-		return "exam/show";
+		if(authentication.isUserInRole("admin"))
+			return "exam/admin-show";
+		if(authentication.isUserInRole("student"))
+			return "exam/student-show";
+		return "denied/index";
 	}
 
 	@GetMapping("/{id}/result")
 	public String examResult(@PathVariable("id") Integer examId, ModelMap model)
+	{
+		Optional<Exam> exam = examRepository.findById(examId);
+		if(!exam.isPresent())
+			return "404/index";
+		model.addAttribute("exam", exam.get());
+		return "exam/result";
+	}
+
+	@GetMapping("/{id}/takeTest")
+	public String takeTest(@PathVariable("id") Integer examId, ModelMap model)
 	{
 		Optional<Exam> exam = examRepository.findById(examId);
 		if(!exam.isPresent())

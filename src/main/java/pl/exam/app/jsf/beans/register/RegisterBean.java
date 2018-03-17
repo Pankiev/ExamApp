@@ -14,9 +14,12 @@ import pl.exam.app.database.repositories.RoleRepository;
 import pl.exam.app.database.repositories.UserRepository;
 
 import javax.annotation.ManagedBean;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.validation.constraints.Size;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -54,7 +57,25 @@ public class RegisterBean
 				Collections.singleton(new SimpleGrantedAuthority("ROLE_" + "visitor")));
 		saveUser(userDetails);
 		login(userDetails);
+		redirectToRoot();
 	}
+
+	private void redirectToRoot()
+	{
+		try
+		{
+			FacesContext.getCurrentInstance().getExternalContext().redirect("/");
+		} catch (IOException e)
+		{
+			showErrorMessage(e.getMessage());
+		}
+	}
+
+	private void showErrorMessage(String message)
+	{
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", message));
+	}
+
 
 	private void saveUser(UserDetails userDetails)
 	{
