@@ -17,8 +17,8 @@ import pl.exam.app.database.entities.jointables.UserExam;
 import pl.exam.app.database.repositories.ExamRepository;
 import pl.exam.app.database.repositories.UserExamRepository;
 import pl.exam.app.database.repositories.UserRepository;
-import pl.exam.app.exceptions.UserExamAlreadyExistsException;
 
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -61,8 +61,18 @@ public class ExamController
 		if (authentication.isUserInRole("admin"))
 			return "exam/admin-show";
 		if (authentication.isUserInRole("student"))
-			return "exam/student-show";
+			return examStudentView(examId, authentication);
+
 		return "denied/index";
+	}
+
+	private String examStudentView(@PathVariable("id") Integer examId,
+			SecurityContextHolderAwareRequestWrapper authentication)
+	{
+		if(!testHasBeenTaken(examId, authentication.getRemoteUser()))
+			return "exam/student-show";
+		else
+			return "exam/result-student";
 	}
 
 	@GetMapping("/{id}/result")
@@ -72,7 +82,7 @@ public class ExamController
 		if (!exam.isPresent())
 			return "404/index";
 		model.addAttribute("exam", exam.get());
-		return "exam/result";
+		return "exam/result-admin";
 	}
 
 	@GetMapping("/{id}/takeTest")
@@ -82,9 +92,33 @@ public class ExamController
 		Optional<Exam> exam = examRepository.findById(examId);
 		if (!exam.isPresent())
 			return "404/index";
+		UserExam userExam = userExamRepository
+				.findByKeyExamIdAndKeyUserNickname(examId, authentication.getRemoteUser());
+		if(testHasBeenTaken(userExam))
+			return "redirect:/exam/" + examId;
 		model.addAttribute("exam", exam.get());
-		updateUserExamEvent(exam.get(), authentication);
+		if(userExam.getTestApproachDate() == null)
+			prepareForFirstTimeVisit(authentication, exam.get());
+
 		return "exam/take-test";
+	}
+
+	private void prepareForFirstTimeVisit(SecurityContextHolderAwareRequestWrapper authentication, Exam exam)
+	{
+		UserExam newUserExam = createUserExamEvent(exam, authentication);
+		userExamRepository.save(newUserExam);
+	}
+
+	private Boolean testHasBeenTaken(Integer examId, String username)
+	{
+		UserExam userExam = userExamRepository
+				.findByKeyExamIdAndKeyUserNickname(examId, username);
+		return testHasBeenTaken(userExam);
+	}
+
+	private Boolean testHasBeenTaken(@Nullable UserExam userExam)
+	{
+		return userExam != null && userExam.getFinished();
 	}
 
 	private QuestionAnswer toQuestionAnswer(Question question)
@@ -94,7 +128,7 @@ public class ExamController
 		return questionAnswer;
 	}
 
-	private void updateUserExamEvent(Exam exam, SecurityContextHolderAwareRequestWrapper authentication)
+	private UserExam createUserExamEvent(Exam exam, SecurityContextHolderAwareRequestWrapper authentication)
 	{
 		String nickname = authentication.getRemoteUser();
 		User user = userRepository.findByNickname(nickname);
@@ -105,8 +139,10 @@ public class ExamController
 				.collect(Collectors.toSet());
 
 		UserExam userExam = userExamRepository.findById(userExamKey).get();
+		randomQuestionAnswers.forEach(questionAnswer -> questionAnswer.setUserExam(userExam));
 		userExam.setQuestionsWithAnswers(randomQuestionAnswers);
-		userExamRepository.save(userExam);
+		userExam.setTestApproachDate(new Date());
+		return userExam;
 	}
 
 	private Set<Question> drawRandomQuestions(Exam exam)

@@ -5,14 +5,15 @@ import pl.exam.app.database.entities.Question;
 import pl.exam.app.database.entities.QuestionAnswer;
 import pl.exam.app.database.entities.jointables.UserExam;
 import pl.exam.app.database.repositories.UserExamRepository;
+import pl.exam.app.exceptions.NoSuchAnswerException;
 
 import javax.annotation.ManagedBean;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 @ManagedBean
@@ -23,18 +24,12 @@ public class TakeExamView
 	private Integer examId;
 	private List<Question> shuffledData;
 	private Map<Question, Answer> answers = new HashMap<>();
+	private UserExam userExam;
 
 	@Inject
 	public TakeExamView(UserExamRepository userExamRepository)
 	{
 		this.userExamRepository = userExamRepository;
-
-	}
-
-	public void answerChoosen(ValueChangeEvent event)
-	{
-		Answer choosenAnswer = (Answer) event.getNewValue();
-		answers.put(choosenAnswer.getQuestion(), choosenAnswer);
 	}
 
 	public void setExamId(Integer examId)
@@ -53,7 +48,7 @@ public class TakeExamView
 
 	private List<Question> fetchAndShuffleData()
 	{
-		UserExam userExam = userExamRepository.findByKeyExamIdAndKeyUserNickname(examId, getUserNickname());
+		userExam = userExamRepository.findByKeyExamIdAndKeyUserNickname(examId, getUserNickname());
 		List<Question> questions = userExam.getQuestionsWithAnswers().stream()
 				.map(QuestionAnswer::getQuestion)
 				.collect(Collectors.toList());
@@ -63,8 +58,47 @@ public class TakeExamView
 		return questions;
 	}
 
-	public String getUserNickname()
+	private String getUserNickname()
 	{
 		return FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
+	}
+
+	public void answerSelected(ValueChangeEvent event)
+	{
+		Integer answerId = Integer.valueOf((String) event.getNewValue());
+		Answer answer = findAnswer(answerId);
+		answers.put(answer.getQuestion(), answer);
+	}
+
+	private Answer findAnswer(Integer answerId)
+	{
+		return shuffledData.stream()
+				.map(Question::getAnswers)
+				.flatMap(Collection::stream)
+				.filter(answer -> answer.getId().equals(answerId))
+				.findAny()
+				.orElseThrow(NoSuchAnswerException::new);
+	}
+
+	public void submitExam()
+	{
+		userExam.getQuestionsWithAnswers().forEach(this::setChoosenAnswer);
+		userExam.setFinished(true);
+		userExam.setTotalScore(calculateTotalScore(userExam.getQuestionsWithAnswers()));
+		userExamRepository.save(userExam);
+	}
+
+	private Float calculateTotalScore(Set<QuestionAnswer> questionsWithAnswers)
+	{
+		return (float) questionsWithAnswers.stream()
+				.map(QuestionAnswer::getAnswer)
+				.filter(Objects::nonNull)
+				.filter(Answer::getValid)
+				.count() / (float)questionsWithAnswers.size();
+	}
+
+	private void setChoosenAnswer(QuestionAnswer questionAnswer)
+	{
+		questionAnswer.setAnswer(answers.get(questionAnswer.getQuestion()));
 	}
 }

@@ -3,6 +3,7 @@ package pl.exam.app.database.entities.jointables;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import pl.exam.app.database.entities.Answer;
 import pl.exam.app.database.entities.Exam;
 import pl.exam.app.database.entities.QuestionAnswer;
@@ -18,6 +19,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(of = "key")
+@ToString(exclude = {"questionsWithAnswers", "key"})
 public class UserExam
 {
 	@EmbeddedId
@@ -31,15 +33,7 @@ public class UserExam
 	@Column(name = "test_approach_date")
 	private Date testApproachDate;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "user_exam_answer",
-			joinColumns = {
-					@JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false),
-					@JoinColumn(name = "exam_id", referencedColumnName = "exam_id", nullable = false) },
-			inverseJoinColumns = {
-					@JoinColumn(name = "answer_id", referencedColumnName = "answer_id", nullable = true),
-					@JoinColumn(name = "question_id", referencedColumnName = "question_id", nullable = true) }
-	)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "userExam")
 	private Set<QuestionAnswer> questionsWithAnswers;
 
 	@Column(name = "totalScore")

@@ -8,19 +8,21 @@
 <ui:composition template="../common/template.xhtml">
     <ui:define name="head">
         <f:metadata>
-            <f:event type="preRenderView" listener="#{takeExamView.setExamId(exam.id)}"/>
+            <f:event type="preRenderComponent" listener="#{takeExamView.setExamId(exam.id)}"/>
         </f:metadata>
     </ui:define>
     <ui:define name="content">
         <h:form>
             <ui:repeat value="#{takeExamView.shuffledData}" var="question">
                 #{question.question}
-                <p:selectOneRadio value="">
-                    <f:ajax listener="#{takeExamView.answerChoosen}" />
-                    <f:selectItems value="#{question.answers}" var="answer" itemLabel="#{answer.answer}" itemValue="#{answer}"/>
+                <p:selectOneRadio layout="responsive" columns="1" valueChangeListener="#{takeExamView.answerSelected}">
+                    <f:selectItems value="#{question.answers}" var="answer" itemLabel="#{answer.answer}" itemValue="#{answer.id}"/>
+                    <p:ajax update="@parent"/>
                 </p:selectOneRadio>
                 <br/>
             </ui:repeat>
+
+            <p:commandButton value="Submit" actionListener="#{takeExamView.submitExam()}" oncomplete="window.location.reload()"/>
         </h:form>
     </ui:define>
 </ui:composition>

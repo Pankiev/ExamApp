@@ -13,12 +13,14 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 @Entity(name = "Answer")
 @Table(name = "answers")
 @Data
 @EqualsAndHashCode(of = "id")
 @ToString(exclude="question")
-public class Answer
+public class Answer implements Serializable
 {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

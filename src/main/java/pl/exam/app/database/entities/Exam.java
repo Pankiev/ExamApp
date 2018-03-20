@@ -1,7 +1,5 @@
 package pl.exam.app.database.entities;
 
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -9,12 +7,14 @@ import javax.persistence.*;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import pl.exam.app.database.entities.jointables.UserExam;
 
 @Table(name = "exams")
 @Entity(name = "Exam")
 @Data
 @EqualsAndHashCode(of = "id")
+@ToString(exclude = {"questinos", "users"})
 public class Exam
 {
 	@Id

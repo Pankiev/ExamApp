@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="../common/template.xhtml">
+    <ui:define name="head">
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{examResultView.setExamId(exam.id)}" />
+        </f:metadata>
+    </ui:define>
+    <ui:define name="content">
+        <h:form>
+            <p:outputPanel id="users">
+                <p:dataTable var="userExamData" value="#{examResultView.userExamResult}" >
+                    <p:column headerText="Approach date">
+                        <h:outputText value="#{userExamData.testApproachDate}" />
+                    </p:column>
+                    <p:column headerText="Total score">
+                        <h:outputText value="#{userExamData.totalScore}">
+                            <f:convertNumber type="percent" />
+                        </h:outputText>
+                    </p:column>
+                </p:dataTable>
+            </p:outputPanel>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>

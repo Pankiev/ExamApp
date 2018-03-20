@@ -1,17 +1,14 @@
 package pl.exam.app.jsf.beans.exam;
 
-import pl.exam.app.database.entities.Exam;
 import pl.exam.app.database.entities.jointables.UserExam;
-import pl.exam.app.database.repositories.ExamRepository;
 import pl.exam.app.database.repositories.UserExamRepository;
-import pl.exam.app.database.repositories.UserRepository;
 
 import javax.annotation.ManagedBean;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Optional;
 
 @ManagedBean
 @ViewScoped
@@ -31,6 +28,16 @@ public class ExamResultView
 	{
 		if(examId != null)
 			this.examId = examId;
+	}
+
+	public UserExam getUserExamResult()
+	{
+		return userExamRepository.findByKeyExamIdAndKeyUserNickname(examId, getUsername());
+	}
+
+	private String getUsername()
+	{
+		return FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
 	}
 
 	public Collection<UserExam> getUsersAssignedToExamData()

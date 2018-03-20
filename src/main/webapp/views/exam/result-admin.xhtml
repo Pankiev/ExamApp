@@ -25,9 +25,6 @@
                     <p:column headerText="Class Id" sortBy="#{userExamData.user.idInClass}">
                         <h:outputText value="#{userExamData.user.idInClass}" />
                     </p:column>
-                    <p:column headerText="Creation date" sortBy="#{userExamData.user.creationDate}">
-                        <h:outputText value="#{userExamData.user.creationDate}" />
-                    </p:column>
                     <p:column headerText="Approach date" sortBy="#{userExamData.testApproachDate}">
                         <h:outputText value="#{userExamData.testApproachDate}" />
                     </p:column>
@@ -35,7 +32,9 @@
                         <h:outputText value="#{userExamData.finished}" />
                     </p:column>
                     <p:column headerText="Total score" sortBy="#{userExamData.totalScore}">
-                        <h:outputText value="#{userExamData.totalScore}" />
+                        <h:outputText value="#{userExamData.totalScore}">
+                            <f:convertNumber type="percent" />
+                        </h:outputText>
                     </p:column>
                 </p:dataTable>
             </p:outputPanel>
