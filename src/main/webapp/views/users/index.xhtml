@@ -46,8 +46,10 @@
                         <h:outputText value="Class id:" />
                         <p:inputNumber id="idInClass" value="#{userView.selectedUser.idInClass}" minValue="1" maxValue="99"/>
                     </p:panelGrid>
+                    <p:commandButton update="@form" style="margin-top: 5px; float:left"
+                                     value="Delete" actionListener="#{userView.deleteSelectedUser()}" />
                     <p:commandButton update="@form"
-                            style="margin-top: 5px; float:left" value="Save" actionListener="#{userView.saveSelectedUser()}" />
+                            style="margin-top: 5px; float:right" value="Save" actionListener="#{userView.saveSelectedUser()}" />
                 </p:outputPanel>
             </p:dialog>
         </h:form>

@@ -66,4 +66,9 @@ public class UserView
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_ERROR, "There is already a user with this class id", null));
 	}
+
+	public void deleteSelectedUser()
+	{
+		userRepository.delete(selectedUser);
+	}
 }
