@@ -14,7 +14,7 @@ import pl.exam.app.database.entities.jointables.UserExam;
 @Entity(name = "Exam")
 @Data
 @EqualsAndHashCode(of = "id")
-@ToString(exclude = {"questinos", "users"})
+@ToString(exclude = {"questions", "users"})
 public class Exam
 {
 	@Id
