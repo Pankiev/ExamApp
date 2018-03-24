@@ -20,7 +20,7 @@ services:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=exam_app
     networks:
-      - mmorpg_net
+      - exam_app_net
 
 networks:
   exam_app_net:
