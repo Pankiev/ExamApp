@@ -1,6 +1,7 @@
 package pl.exam.app.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -19,6 +20,7 @@ import pl.exam.app.database.repositories.UserExamRepository;
 import pl.exam.app.database.repositories.UserRepository;
 
 import javax.annotation.Nullable;
+import javax.annotation.security.RolesAllowed;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -76,6 +78,7 @@ public class ExamController
 	}
 
 	@GetMapping("/{id}/result")
+	@Secured("ROLE_admin")
 	public String examResult(@PathVariable("id") Integer examId, ModelMap model)
 	{
 		Optional<Exam> exam = examRepository.findById(examId);

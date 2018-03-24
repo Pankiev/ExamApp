@@ -17,7 +17,7 @@ public class RootController
 		if(isStudent(securityContext))
 			return "exam/student-index";
 
-		return "denied/index";
+		return "redirect:/denied/index";
 	}
  
 	private boolean isAdmin(SecurityContextHolderAwareRequestWrapper securityContext)
