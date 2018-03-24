@@ -6,13 +6,13 @@ services:
     ports:
       - 80:80
     depends_on:
-      - mmorpg_db
+      - exam_app_db
     restart: on-failure
     networks:
       - exam_app_net
 
 
-  mmorpg_db:
+  exam_app_db:
     container_name: exam_app_db
     image: mysql:5.7.15
     restart: on-failure
