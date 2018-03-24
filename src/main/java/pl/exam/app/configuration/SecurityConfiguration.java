@@ -38,8 +38,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
         http
             .authorizeRequests()
                 .antMatchers("/", "/authentication/**", "/register/**", "/register", "/javax.faces.resource/**", "/css/**",
-						"/images/**", "/js/**", "/error/**", "/debug/**", "/views/register/index.xhtml").permitAll()
-                .anyRequest().authenticated()
+						"/images/**", "/js/**", "/views/**", "/error/**", "/debug/**", "/views/register/index.xhtml").permitAll()
+                .anyRequest().permitAll()
             .and()
             	.formLogin().loginPage("/authentication/login")
             	.usernameParameter("j_username")
