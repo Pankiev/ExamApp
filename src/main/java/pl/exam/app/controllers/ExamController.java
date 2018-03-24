@@ -20,7 +20,6 @@ import pl.exam.app.database.repositories.UserExamRepository;
 import pl.exam.app.database.repositories.UserRepository;
 
 import javax.annotation.Nullable;
-import javax.annotation.security.RolesAllowed;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -71,10 +70,13 @@ public class ExamController
 	private String examStudentView(@PathVariable("id") Integer examId,
 			SecurityContextHolderAwareRequestWrapper authentication)
 	{
-		if(!testHasBeenTaken(examId, authentication.getRemoteUser()))
-			return "exam/student-show";
-		else
+		UserExam userExam = userExamRepository
+				.findByKeyExamIdAndKeyUserNickname(examId, authentication.getRemoteUser());
+		if(testHasFinished(userExam))
 			return "exam/result-student";
+		if(testHasBeenOpened(userExam))
+			return "exam/take-test";
+		return "exam/student-show";
 	}
 
 	@GetMapping("/{id}/result")
@@ -97,7 +99,7 @@ public class ExamController
 			return "404/index";
 		UserExam userExam = userExamRepository
 				.findByKeyExamIdAndKeyUserNickname(examId, authentication.getRemoteUser());
-		if(testHasBeenTaken(userExam))
+		if(testHasFinished(userExam))
 			return "redirect:/exam/" + examId;
 		model.addAttribute("exam", exam.get());
 		if(userExam.getTestApproachDate() == null)
@@ -112,14 +114,12 @@ public class ExamController
 		userExamRepository.save(newUserExam);
 	}
 
-	private Boolean testHasBeenTaken(Integer examId, String username)
+	private boolean testHasBeenOpened(@Nullable UserExam userExam)
 	{
-		UserExam userExam = userExamRepository
-				.findByKeyExamIdAndKeyUserNickname(examId, username);
-		return testHasBeenTaken(userExam);
+		return userExam != null && userExam.getTestApproachDate() != null;
 	}
 
-	private Boolean testHasBeenTaken(@Nullable UserExam userExam)
+	private boolean testHasFinished(@Nullable UserExam userExam)
 	{
 		return userExam != null && userExam.getFinished();
 	}

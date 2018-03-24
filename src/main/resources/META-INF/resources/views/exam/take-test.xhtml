@@ -7,12 +7,15 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
 <ui:composition template="../common/template.xhtml">
     <ui:define name="head">
+        <script type="text/javascript" src="/js/take-test.js"/>
         <f:metadata>
             <f:event type="preRenderComponent" listener="#{takeExamView.setExamId(exam.id)}"/>
         </f:metadata>
     </ui:define>
     <ui:define name="content">
-        <h:form>
+        <h:form id="form">
+            Time left: <h:outputText id="timeLeft" value="#{takeExamView.timeLeft}"/>s <br/>
+            <p:remoteCommand id="updateTimeLeft" name="updateTimeLeft" update="timeLeft"/>
             <ui:repeat value="#{takeExamView.shuffledData}" var="question">
                 #{question.question}
                 <p:selectOneRadio layout="responsive" columns="1" valueChangeListener="#{takeExamView.answerSelected}">
@@ -24,6 +27,11 @@
 
             <p:commandButton value="Submit" actionListener="#{takeExamView.submitExam()}" oncomplete="window.location.reload()"/>
         </h:form>
+    </ui:define>
+    <ui:define name="script">
+        <script type="text/javascript">
+            setInterval(updateTimeLeft, 5000);
+        </script>
     </ui:define>
 </ui:composition>
 </html>
