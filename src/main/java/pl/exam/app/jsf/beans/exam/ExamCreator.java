@@ -20,25 +20,35 @@ import pl.exam.app.database.entities.Answer;
 import pl.exam.app.database.entities.Exam;
 import pl.exam.app.database.entities.Question;
 import pl.exam.app.database.repositories.ExamRepository;
+import pl.exam.app.jsf.beans.helpers.Dictionary;
 
 @ManagedBean
 @ViewScoped
 @Component
 public class ExamCreator
 {
-	@Inject
-	private ExamRepository examRepository;
+	private final ExamRepository examRepository;
+	private final Dictionary dictionary;
 	
 	@Getter
 	@Setter
-	private String examName = "Insert exam name.";
+	private String examName;
 	
-	private List<Question> questions = new ArrayList<>(Collections.singleton(createDefaultQuestion()));
+	private final List<Question> questions;
+
+	@Inject
+	public ExamCreator(ExamRepository examRepository, Dictionary dictionary)
+	{
+		this.examRepository = examRepository;
+		this.dictionary = dictionary;
+		examName = dictionary.getMessage("Insert.exam.name");
+		questions = new ArrayList<>(Collections.singleton(createDefaultQuestion()));
+	}
 
 	private Question createDefaultQuestion()
 	{
-		Question question = new Question();
-		question.setQuestion("Insert question");
+		Question question = new Question(); 
+		question.setQuestion(dictionary.getMessage("Insert.question"));
 		question.setSecondsForAnswer(30);
 		Answer defaultAnswer = createDefaultAnswerForQuestion(question);
 		defaultAnswer.setValid(true);
@@ -110,7 +120,7 @@ public class ExamCreator
 	{
 		Answer answer = new Answer();
 		answer.setQuestion(question);
-		answer.setAnswer("Insert answer");
+		answer.setAnswer(dictionary.getMessage("Insert.answer"));
 		return answer;
 	}
 	

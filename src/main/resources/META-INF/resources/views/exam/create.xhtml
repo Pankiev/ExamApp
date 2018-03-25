@@ -8,23 +8,23 @@
 <ui:composition template="../common/template.xhtml">
     <ui:define name="content">
 
-        <h1>Create exam page</h1>
+        <h1>#{dictionary['Create.new.definition']}</h1>
         <h:form id="mainForm">
-            Exam name: <br/>
+            #{dictionary['Exam.name']} <br/>
             <p:inputText id="examNameInput" value="#{examCreator.examName}"
                          name="name"></p:inputText>
             <br/>
-            Questions:
+            #{dictionary['Questions']}
             <p:outputPanel id="questions">
 
                 <p:dataTable value="#{examCreator.questions}" var="question">
                     <p:column>
                         <p:inputText value="#{question.question}"/>
-                        <p:commandButton style="float:right;" value="Add answer"
+                        <p:commandButton style="float:right;" value="#{dictionary['Add.answer']}"
                                          update="answers"
                                          actionListener="#{examCreator.addQuestionAnswer(question)}"></p:commandButton>
                         <br/>
-                        Time for question
+                        #{dictionary['Time.for.question']}:
                         <p:inputNumber id="secondsForQuestion" size="2"
                                        value="#{question.secondsForAnswer}" symbol="s"
                                        symbolPosition="s" decimalPlaces="0">
@@ -34,14 +34,14 @@
                                 <p:inputText id="answer" value="#{answer.answer}">
                                     <p:ajax event="blur" update="@this"/>
                                 </p:inputText>
-                                Is valid:
+                                #{dictionary['Is.valid']}:
                                 <p:selectBooleanCheckbox value="#{answer.valid}">
                                     <p:ajax update="@parent:@parent:answers"
                                             listener="#{examCreator.selectAnswer(question, answer)}"/>
                                 </p:selectBooleanCheckbox>
 
                                 <p:commandButton style="float:right"
-                                                 update="@parent:@parent:answers" value="Remove"
+                                                 update="@parent:@parent:answers" value="#{dictionary['Remove']}"
                                                  actionListener="#{examCreator.removeAnswer(question, answer)}"></p:commandButton>
                                 <br/>
                             </ui:repeat>
@@ -49,15 +49,15 @@
 
                     </p:column>
                     <p:column>
-                        <p:commandButton update=":mainForm:questions" value="Remove"
+                        <p:commandButton update=":mainForm:questions" value="#{dictionary['Remove']}"
                                          actionListener="#{examCreator.removeQuestion(question)}"></p:commandButton>
                     </p:column>
                 </p:dataTable>
             </p:outputPanel>
-            <p:commandButton update="questions" value="Add question"
+            <p:commandButton update="questions" value="#{dictionary['Add.question']}"
                              actionListener="#{examCreator.addQuestion()}"></p:commandButton>
             <p:messages id="messages" showDetail="true" closable="true"/>
-            <p:commandButton value="Save" update="messages"
+            <p:commandButton value="#{dictionary['Save']}" update="messages"
                              actionListener="#{examCreator.save()}"></p:commandButton>
         </h:form>
     </ui:define>
