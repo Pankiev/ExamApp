@@ -9,11 +9,11 @@
     <ui:define name="content">
         <h:form>
             <h1>
-                Exam app
+                #{dictionary['Exam.app']}
             </h1>
 
-            <p:link href="exam/index" value="Manage exams"/><br/>
-            <p:link href="users/index" value="Manage users"/><br/>
+            <p:link href="exam/index" value="#{dictionary['Manage.exams']}"/><br/>
+            <p:link href="users/index" value="#{dictionary['Manage.users']}"/><br/>
         </h:form>
     </ui:define>
 </ui:composition>
