@@ -11,20 +11,20 @@
             <div style="margin: auto; width: 270px; margin-top: 100px;">
                 <p:messages id="messages" autoUpdate="true" />
                 <p:panelGrid columns="2">
-                    <p:outputLabel for="username" value="User:  "/>
+                    <p:outputLabel for="username" value="#{dictionary['User']}"/>
                     <p:inputText id="username" value="#{registerBean.username}" required="true"
                                  requiredMessage="username required" label="username"/>
 
-                    <p:outputLabel for="password" value="Password: "/>
+                    <p:outputLabel for="password" value="#{dictionary['Password']}"/>
                     <p:password id="password" value="#{registerBean.password}" label="password" required="true"
                                 match="passwordRepeat"
                                 validatorMessage="Passwords should match and be between 5 and 30 characters"/>
 
-                    <p:outputLabel for="passwordRepeat" value="Repeat password: "/>
+                    <p:outputLabel for="passwordRepeat" value="#{dictionary['Repeat.password']}"/>
                     <p:password id="passwordRepeat" value="#{registerBean.passwordRepeat}" label="password"
                                 required="true"/>
                     &nbsp;
-                    <p:commandButton style="float:right;" value="Register"
+                    <p:commandButton style="float:right;" value="#{dictionary['Register']}"
                                      actionListener="#{registerBean.register()}" />
                 </p:panelGrid>
             </div>
