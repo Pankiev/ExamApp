@@ -47,7 +47,7 @@ public class ExamCreator
 
 	private Question createDefaultQuestion()
 	{
-		Question question = new Question(); 
+		Question question = new Question();
 		question.setQuestion(dictionary.getMessage("Insert.question"));
 		question.setSecondsForAnswer(30);
 		Answer defaultAnswer = createDefaultAnswerForQuestion(question);
