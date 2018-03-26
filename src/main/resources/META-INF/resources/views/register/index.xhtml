@@ -9,7 +9,9 @@
     <ui:define name="content">
         <h:form id="registerForm">
             <div style="margin: auto; width: 270px; margin-top: 100px;">
-                <p:messages id="messages" autoUpdate="true" showDetail="true" closable="true"/>
+                <p:messages id="messages" showDetail="true" closable="true">
+                    <p:autoUpdate />
+                </p:messages>
                 <p:panelGrid columns="2">
                     <p:outputLabel for="username" value="#{dictionary['User']}"/>
                     <p:inputText id="username" value="#{registerBean.username}" required="true"

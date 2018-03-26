@@ -29,7 +29,9 @@
                     </ui:repeat>
                 </div>
                 <div style="margin-left: 10%;">
-                    <p:messages autoUpdate="true" showDetail="true" closable="true"/>
+                    <p:messages showDetail="true" closable="true">
+                        <p:autoUpdate/>
+                    </p:messages>
                     <h4>#{dictionary['Assign.to.students']}</h4>
                     <p:selectOneMenu id="class" value="#{examView.selectedClass}" editable="true">
                         <p:ajax listener="#{examView.onClassChange}" update="users" />

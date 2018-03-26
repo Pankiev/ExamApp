@@ -11,7 +11,9 @@
         <h:form>
             <h1>#{dictionary['Manage.users']}</h1>
 
-            <p:messages autoUpdate="true" closable="true"/>
+            <p:messages closable="true">
+                <p:autoUpdate/>
+            </p:messages>
             <p:dataTable var="userExamData" value="#{userView.lazyModel}" paginator="true" rows="10"
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                          rowsPerPageTemplate="10,20,30" selectionMode="single" selection="#{userView.selectedUser}" id="usersTable" lazy="true">
