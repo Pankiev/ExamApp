@@ -14,7 +14,7 @@
     </ui:define>
     <ui:define name="content">
         <h:form id="form">
-            Time left: <h:outputText id="timeLeft" value="#{takeExamView.timeLeft}"/>s <br/>
+            #{dictionary['Time.left']} <h:outputText id="timeLeft" value="#{takeExamView.timeLeft}"/>s <br/>
             <p:remoteCommand id="updateTimeLeft" name="updateTimeLeft" update="timeLeft"/>
             <ui:repeat value="#{takeExamView.shuffledData}" var="question">
                 #{question.question}
@@ -25,7 +25,7 @@
                 <br/>
             </ui:repeat>
 
-            <p:commandButton value="Submit" actionListener="#{takeExamView.submitExam()}" oncomplete="window.location.reload()"/>
+            <p:commandButton value="#{dictionary['Submit']}" actionListener="#{takeExamView.submitExam()}" oncomplete="window.location.reload()"/>
         </h:form>
     </ui:define>
     <ui:define name="script">

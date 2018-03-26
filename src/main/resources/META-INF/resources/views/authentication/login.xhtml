@@ -23,23 +23,23 @@
                             severity="error">
                 </p:messages>
                 <p:panelGrid columns="2">
-                    <p:outputLabel for="j_username" value="#{dictionary.User}"/>
+                    <p:outputLabel for="j_username" value="#{dictionary['User']}"/>
                     <p:inputText id="j_username" required="true" label="username"/>
 
-                    <p:outputLabel for="j_password" value="#{dictionary.Password}"/>
+                    <p:outputLabel for="j_password" value="#{dictionary['Password']}"/>
                     <p:password id="j_password" label="password" required="true"/>
 
                     <p:outputLabel for="_spring_security_remember_me"
                                    value="#{dictionary['Remember.me']}"/>
                     <p:outputPanel>
-                        <p:commandButton id="adminCredentials" value="#{dictionary.Admin}"
+                        <p:commandButton id="adminCredentials" value="#{dictionary['Admin']}"
                                          onclick="useAdminCredentials();" type="button"/>
-                        <p:commandButton id="studentCredentials" value="#{dictionary.Student}"
+                        <p:commandButton id="studentCredentials" value="#{dictionary['Student']}"
                                          type="button" onclick="useStudentCredentials();"/>
-                        <p:commandButton id="register" value="#{dictionary.Register}" type="button"
+                        <p:commandButton id="register" value="#{dictionary['Register']}" type="button"
                                          onclick="window.location.href = '/register';"></p:commandButton>
                         <p:commandButton style="float:right" id="submitButton"
-                                         ajax="false" type="submit" value="#{dictionary.Login}"/>
+                                         ajax="false" type="submit" value="#{dictionary['Log.in']}"/>
                         <p:selectBooleanCheckbox id="_spring_security_remember_me"/>
                     </p:outputPanel>
                 </p:panelGrid>

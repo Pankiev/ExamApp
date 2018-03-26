@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import pl.exam.app.database.entities.Role;
 import pl.exam.app.database.repositories.RoleRepository;
 import pl.exam.app.database.repositories.UserRepository;
+import pl.exam.app.jsf.beans.helpers.Dictionary;
 
 import javax.annotation.ManagedBean;
 import javax.faces.application.FacesMessage;
@@ -43,21 +44,33 @@ public class RegisterBean
 
 	private final UserRepository userRepository;
 	private final RoleRepository roleRepository;
+	private final Dictionary dictionary;
 
 	@Inject
-	public RegisterBean(UserRepository userRepository, RoleRepository roleRepository)
+	public RegisterBean(UserRepository userRepository, RoleRepository roleRepository, Dictionary dictionary)
 	{
 		this.userRepository = userRepository;
 		this.roleRepository = roleRepository;
+		this.dictionary = dictionary;
 	}
 
 	public void register()
 	{
+		if(isNicknameDuplicated(username))
+		{
+			showErrorMessage(dictionary.getMessage("User.with.this.nickname.already.exists"));
+			return;
+		}
 		UserDetails userDetails = new User(username, password,
 				Collections.singleton(new SimpleGrantedAuthority("ROLE_" + "visitor")));
 		saveUser(userDetails);
 		login(userDetails);
 		redirectToRoot();
+	}
+
+	private boolean isNicknameDuplicated(String username)
+	{
+		return userRepository.existsByNickname(username);
 	}
 
 	private void redirectToRoot()
@@ -73,9 +86,9 @@ public class RegisterBean
 
 	private void showErrorMessage(String message)
 	{
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", message));
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
+				FacesMessage.SEVERITY_ERROR, dictionary.getMessage("Error!"), message));
 	}
-
 
 	private void saveUser(UserDetails userDetails)
 	{

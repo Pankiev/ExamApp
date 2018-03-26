@@ -12,6 +12,8 @@ public interface UserRepository extends PagingAndSortingRepository<User, Integer
 {
 	User findByNickname(String nickname);
 
+	boolean existsByNickname(String nickname);
+
 	@Query("SELECT u FROM User u, in (u.roles)role WHERE u.idInClass = null OR u.schoolClass = null")
 	Iterable<User> getUsersWithoutClass();
 

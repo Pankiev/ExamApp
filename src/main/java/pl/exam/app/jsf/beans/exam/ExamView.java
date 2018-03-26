@@ -8,6 +8,7 @@ import pl.exam.app.database.entities.jointables.UserExam;
 import pl.exam.app.database.repositories.ExamRepository;
 import pl.exam.app.database.repositories.UserExamRepository;
 import pl.exam.app.database.repositories.UserRepository;
+import pl.exam.app.jsf.beans.helpers.Dictionary;
 
 import javax.annotation.ManagedBean;
 import javax.faces.application.FacesMessage;
@@ -27,6 +28,7 @@ public class ExamView
 	private final UserRepository userRepository;
 	private final ExamRepository examRepository;
 	private final UserExamRepository userExamRepository;
+	private final Dictionary dictionary;
 	private Integer examId;
 	private Collection<User> selectedUsers = Collections.emptyList();
 	@Getter
@@ -34,11 +36,13 @@ public class ExamView
 	private String selectedClass;
 
 	@Inject
-	public ExamView(UserRepository userRepository, ExamRepository examRepository, UserExamRepository userExamRepository)
+	public ExamView(UserRepository userRepository, ExamRepository examRepository, UserExamRepository userExamRepository,
+			Dictionary dictionary)
 	{
 		this.userRepository = userRepository;
 		this.examRepository = examRepository;
 		this.userExamRepository = userExamRepository;
+		this.dictionary = dictionary;
 	}
 
 	public Iterable<String> getSchoolClasses()
@@ -84,6 +88,7 @@ public class ExamView
 
 	private void showSavedMessage()
 	{
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Users saved"));
+		String saved = dictionary.getMessage("Users.saved");
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, saved, ""));
 	}
 }

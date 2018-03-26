@@ -7,6 +7,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import pl.exam.app.database.entities.User;
 import pl.exam.app.database.repositories.RoleRepository;
 import pl.exam.app.database.repositories.UserRepository;
+import pl.exam.app.jsf.beans.helpers.Dictionary;
 
 import javax.annotation.ManagedBean;
 import javax.faces.application.FacesMessage;
@@ -19,20 +20,22 @@ import java.util.Collections;
 @ViewScoped
 public class UserView
 {
-	@Getter
-	private final LazyUserDataModel lazyModel;
 	private final UserRepository userRepository;
 	private final RoleRepository roleRepository;
+	private final Dictionary dictionary;
+	@Getter
+	private final LazyUserDataModel lazyModel;
 	@Getter
 	@Setter
 	private User selectedUser;
 
 	@Inject
-	UserView(UserRepository userRepository, RoleRepository roleRepository)
+	UserView(UserRepository userRepository, RoleRepository roleRepository, Dictionary dictionary)
 	{
 		lazyModel = new LazyUserDataModel(userRepository);
 		this.userRepository = userRepository;
 		this.roleRepository = roleRepository;
+		this.dictionary = dictionary;
 	}
 
 	public Iterable<String> getAllClasses()
@@ -44,7 +47,7 @@ public class UserView
 	{
 		try
 		{
-			if(selectedUser.getIdInClass() != null && selectedUser.getSchoolClass() != null)
+			if (selectedUser.getIdInClass() != null && selectedUser.getSchoolClass() != null)
 				selectedUser.setRoles(Sets.newHashSet(roleRepository.findByName("student")));
 
 			userRepository.save(selectedUser);
@@ -58,13 +61,14 @@ public class UserView
 	private void showSavedMessage()
 	{
 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "User saved", null));
+				new FacesMessage(FacesMessage.SEVERITY_INFO, dictionary.getMessage("User.saved"), null));
 	}
 
 	private void showErrorMessage()
 	{
 		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_ERROR, "There is already a user with this class id", null));
+				new FacesMessage(FacesMessage.SEVERITY_ERROR,
+						dictionary.getMessage("There.is.already.a.user.with.this.class.id"), null));
 	}
 
 	public void deleteSelectedUser()

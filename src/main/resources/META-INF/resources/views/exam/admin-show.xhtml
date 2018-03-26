@@ -14,13 +14,13 @@
     </ui:define>
     <ui:define name="content">
         <h:form>
-            <h1>Exam #{exam.name}</h1>
-            <p:link href="/exam/#{exam.id}/result" value="Exam result"/><br/>
+            <h1>#{dictionary['Exam']} #{exam.name}</h1>
+            <p:link href="/exam/#{exam.id}/result" value="#{dictionary['Exam.result']}"/><br/>
             <div style="display: flex;">
                 <div>
                     <ui:repeat var="question" value="#{exam.questions}">
                         <h2>#{question.question}</h2>
-                        Time: #{question.secondsForAnswer}
+                        #{dictionary['Time']} #{question.secondsForAnswer}
                         <ui:repeat var="answer" value="#{question.answers}">
                             <p:outputLabel style="#{answer.valid  ? 'color:green;' : ''}">
                                 <h3>#{answer.answer}</h3>
@@ -29,28 +29,30 @@
                     </ui:repeat>
                 </div>
                 <div style="margin-left: 10%;">
-                    <p:messages autoUpdate="true" showDetail="true" closable="true"/>
-                    <h4>Assign to students</h4>
+                    <p:messages showDetail="true" closable="true">
+                        <p:autoUpdate/>
+                    </p:messages>
+                    <h4>#{dictionary['Assign.to.students']}</h4>
                     <p:selectOneMenu id="class" value="#{examView.selectedClass}" editable="true">
                         <p:ajax listener="#{examView.onClassChange}" update="users" />
                         <f:selectItems value="#{examView.schoolClasses}" />
                     </p:selectOneMenu>
                     <p:outputPanel id="users">
                         <p:dataTable var="userExamData" value="#{examView.selectedUsers}" >
-                            <p:column headerText="Login" sortBy="#{userExamData.nickname}">
+                            <p:column headerText="#{dictionary['Login']}" sortBy="#{userExamData.nickname}">
                                 <h:outputText value="#{userExamData.nickname}" />
                             </p:column>
-                            <p:column headerText="Class" sortBy="#{userExamData.schoolClass}">
+                            <p:column headerText="#{dictionary['Class']}" sortBy="#{userExamData.schoolClass}">
                                 <h:outputText value="#{userExamData.schoolClass}" />
                             </p:column>
-                            <p:column headerText="Class Id" sortBy="#{userExamData.idInClass}">
+                            <p:column headerText="#{dictionary['Class.id']}" sortBy="#{userExamData.idInClass}">
                                 <h:outputText value="#{userExamData.idInClass}" />
                             </p:column>
-                            <p:column headerText="Creation date" sortBy="#{userExamData.creationDate}">
+                            <p:column headerText="#{dictionary['Creation.date']}" sortBy="#{userExamData.creationDate}">
                                 <h:outputText value="#{userExamData.creationDate}" />
                             </p:column>
                         </p:dataTable>
-                        <p:commandButton value="Assign" actionListener="#{examView.assignUsersToExam()}"/>
+                        <p:commandButton value="#{dictionary['Assign']}" actionListener="#{examView.assignUsersToExam()}"/>
                     </p:outputPanel>
                 </div>
             </div>
