@@ -32,12 +32,8 @@
                     <p:outputLabel for="_spring_security_remember_me"
                                    value="#{dictionary['Remember.me']}"/>
                     <p:outputPanel>
-                        <p:commandButton id="adminCredentials" value="#{dictionary['Admin']}"
-                                         onclick="useAdminCredentials();" type="button"/>
-                        <p:commandButton id="studentCredentials" value="#{dictionary['Student']}"
-                                         type="button" onclick="useStudentCredentials();"/>
                         <p:commandButton id="register" value="#{dictionary['Register']}" type="button"
-                                         onclick="window.location.href = '/register';"></p:commandButton>
+                                         onclick="window.location.href = '/register';"/>
                         <p:commandButton style="float:right" id="submitButton"
                                          ajax="false" type="submit" value="#{dictionary['Log.in']}"/>
                         <p:selectBooleanCheckbox id="_spring_security_remember_me"/>
@@ -45,20 +41,6 @@
                 </p:panelGrid>
             </h:form>
         </div>
-    </ui:define>
-
-    <ui:define name="script">
-        <script type="application/javascript">
-            function useStudentCredentials() {
-                document.getElementById("j_username").value = "student";
-                document.getElementById("j_password").value = "student";
-            }
-
-            function useAdminCredentials() {
-                document.getElementById("j_username").value = "admin";
-                document.getElementById("j_password").value = "admin";
-            }
-        </script>
     </ui:define>
 </ui:composition>
 </html>
