@@ -9,16 +9,16 @@
     <ui:define name="content">
         <h:form id="registerForm">
             <div style="margin: auto; width: 270px; margin-top: 100px;">
-                <p:messages id="messages" autoUpdate="true" />
+                <p:messages id="messages" autoUpdate="true" showDetail="true" closable="true"/>
                 <p:panelGrid columns="2">
                     <p:outputLabel for="username" value="#{dictionary['User']}"/>
                     <p:inputText id="username" value="#{registerBean.username}" required="true"
-                                 requiredMessage="username required" label="username"/>
+                                 requiredMessage="#{dictionary['username.required']}" label="username"/>
 
                     <p:outputLabel for="password" value="#{dictionary['Password']}"/>
                     <p:password id="password" value="#{registerBean.password}" label="password" required="true"
                                 match="passwordRepeat"
-                                validatorMessage="Passwords should match and be between 5 and 30 characters"/>
+                                validatorMessage="#{dictionary['Passwords.should.match.and.be.between.5.and.30.characters']}"/>
 
                     <p:outputLabel for="passwordRepeat" value="#{dictionary['Repeat.password']}"/>
                     <p:password id="passwordRepeat" value="#{registerBean.passwordRepeat}" label="password"
