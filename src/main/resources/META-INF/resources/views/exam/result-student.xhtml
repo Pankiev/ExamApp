@@ -16,10 +16,10 @@
         <h:form>
             <p:outputPanel id="users">
                 <p:dataTable var="userExamData" value="#{examResultView.userExamResult}" >
-                    <p:column headerText="Approach date">
+                    <p:column headerText="#{dictionary['Approach.date']}">
                         <h:outputText value="#{userExamData.testApproachDate}" />
                     </p:column>
-                    <p:column headerText="Total score">
+                    <p:column headerText="#{dictionary['Total.score']}">
                         <h:outputText value="#{userExamData.totalScore}">
                             <f:convertNumber type="percent" />
                         </h:outputText>

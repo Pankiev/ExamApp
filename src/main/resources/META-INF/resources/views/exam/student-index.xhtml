@@ -4,14 +4,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
 <ui:composition template="../common/template.xhtml">
+    <ui:define name="head">
+        <c:set value="#{examIndexViewer.loggedUserExams}" var="loggedUserExams" scope="view"></c:set>
+    </ui:define>
     <ui:define name="content">
         <h:form>
             <h1>
-                Exam app
+                #{dictionary['Your.exams']}
             </h1>
-            student page
+            <h:outputText rendered="#{empty loggedUserExams}" value="#{dictionary['You.have.no.exams.assigned']}" />
             <ui:repeat value="#{examIndexViewer.loggedUserExams}" var="exam">
                 <p:column>
                     <h3>
