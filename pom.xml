@@ -27,7 +27,8 @@
                 </property>
             </activation>
             <properties>
-                <database.url>localhost:3306/exam_app</database.url>
+                <database.host>localhost</database.host>
+                <database.port>3306</database.port>
                 <skipDocker>true</skipDocker>
                 <spring.jpa.hibernate.ddl-auto>update</spring.jpa.hibernate.ddl-auto>
             </properties>
@@ -42,7 +43,8 @@
                 </property>
             </activation>
             <properties>
-                <database.url>exam_app_db:3306/exam_app</database.url>
+                <database.host>exam_app_db</database.host>
+                <database.port>3306</database.port>
                 <skipDocker>false</skipDocker>
                 <spring.jpa.hibernate.ddl-auto>update</spring.jpa.hibernate.ddl-auto>
             </properties>
@@ -69,6 +71,7 @@
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
+                <filtering>true</filtering>
             </resource>
         </resources>
         <plugins>
@@ -103,6 +106,18 @@
                     <imageTags>
                         <imageTag>latest</imageTag>
                     </imageTags>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.0.2</version>
+                <configuration>
+                    <delimiters>
+                        <delimiter>@</delimiter>
+                    </delimiters>
+                    <useDefaultDelimiters>false</useDefaultDelimiters>
                 </configuration>
             </plugin>
 
