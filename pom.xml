@@ -28,7 +28,7 @@
             </activation>
             <properties>
                 <database.host>localhost</database.host>
-                <dockerfile.skip>true</dockerfile.skip>
+                <skipDocker>true</skipDocker>
             </properties>
         </profile>
 
@@ -42,7 +42,7 @@
             </activation>
             <properties>
                 <database.host>exam_app_db</database.host>
-                <dockerfile.skip>false</dockerfile.skip>
+                <skipDocker>false</skipDocker>
             </properties>
         </profile>
     </profiles>
@@ -79,23 +79,29 @@
 
             <plugin>
                 <groupId>com.spotify</groupId>
-                <artifactId>dockerfile-maven-plugin</artifactId>
-                <version>1.3.7</version>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>1.0.0</version>
                 <executions>
                     <execution>
-                        <id>default</id>
+                        <id>build-and-push</id>
+                        <phase>package</phase>
                         <goals>
                             <goal>build</goal>
                             <goal>push</goal>
                         </goals>
+                        <configuration>
+                            <imageName>pankiev/examapp:latest</imageName>
+                        </configuration>
                     </execution>
                 </executions>
                 <configuration>
-                    <repository>pankiev/examapp</repository>
-                    <tag>latest</tag>
+                    <imageName>pankiev/examapp</imageName>
+                    <dockerDirectory>./</dockerDirectory>
                     <serverId>docker-hub-pankiev</serverId>
                     <registryUrl>https://index.docker.io/v1/</registryUrl>
-                    <skip>${dockerfile.skip}</skip>
+                    <imageTags>
+                        <imageTag>latest</imageTag>
+                    </imageTags>
                 </configuration>
             </plugin>
 
