@@ -83,21 +83,22 @@
                 <version>1.0.0</version>
                 <executions>
                     <execution>
-                        <id>default</id>
+                        <id>build-and-push</id>
+                        <phase>package</phase>
                         <goals>
                             <goal>build</goal>
                             <goal>push</goal>
                         </goals>
+                        <configuration>
+                            <imageName>pankiev/examapp:latest</imageName>
+                        </configuration>
                     </execution>
                 </executions>
                 <configuration>
                     <imageName>pankiev/examapp</imageName>
                     <dockerDirectory>./</dockerDirectory>
-                    <!--<tag>latest</tag>-->
                     <serverId>docker-hub-pankiev</serverId>
                     <registryUrl>https://index.docker.io/v1/</registryUrl>
-                    <!--<skip>${dockerfile.skip}</skip>-->
-
                     <imageTags>
                         <imageTag>latest</imageTag>
                     </imageTags>
