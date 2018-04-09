@@ -31,6 +31,7 @@
                 <database.port>3306</database.port>
                 <skipDocker>true</skipDocker>
                 <spring.jpa.hibernate.ddl-auto>update</spring.jpa.hibernate.ddl-auto>
+                <server.port>8080</server.port>
             </properties>
         </profile>
 
@@ -47,6 +48,7 @@
                 <database.port>3306</database.port>
                 <skipDocker>false</skipDocker>
                 <spring.jpa.hibernate.ddl-auto>update</spring.jpa.hibernate.ddl-auto>
+                <server.port>80</server.port>
             </properties>
         </profile>
     </profiles>
