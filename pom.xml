@@ -27,8 +27,9 @@
                 </property>
             </activation>
             <properties>
-                <database.host>localhost</database.host>
+                <database.url>localhost:3306/exam_app</database.url>
                 <skipDocker>true</skipDocker>
+                <spring.jpa.hibernate.ddl-auto>update</spring.jpa.hibernate.ddl-auto>
             </properties>
         </profile>
 
@@ -41,8 +42,9 @@
                 </property>
             </activation>
             <properties>
-                <database.host>exam_app_db</database.host>
+                <database.url>exam_app_db:3306/exam_app</database.url>
                 <skipDocker>false</skipDocker>
+                <spring.jpa.hibernate.ddl-auto>update</spring.jpa.hibernate.ddl-auto>
             </properties>
         </profile>
     </profiles>
@@ -52,7 +54,6 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <jsf.version>2.2.15</jsf.version>
-        <database.port>3306</database.port>
     </properties>
 
     <repositories>
