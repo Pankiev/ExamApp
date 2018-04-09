@@ -1,6 +1,6 @@
 version: '3'
 services:
-  mmorpg_headless_server:
+  exam_app_server:
     container_name: examapp_server
     image: pankiev/examapp
     ports:
