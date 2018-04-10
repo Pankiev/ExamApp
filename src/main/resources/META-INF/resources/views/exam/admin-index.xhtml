@@ -9,7 +9,7 @@
     <ui:define name="content">
         <h:form>
             <h1>#{dictionary['Manage.exams']}</h1>
-            <p:commandButton action="create" value="#{dictionary['Create.new.definition']}"></p:commandButton>
+            <p:commandButton onclick="window.location = '/exam/create'" value="#{dictionary['Create.new.definition']}"></p:commandButton>
             <br/>
             <ui:repeat value="#{examIndexViewer.exams}" var="exam">
                 <p:column>
