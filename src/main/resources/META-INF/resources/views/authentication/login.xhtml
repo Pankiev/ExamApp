@@ -12,7 +12,7 @@
                  type="preRenderView"/>
     </ui:define>
     <ui:define name="content">
-        <div style="margin: auto; width: 270px; margin-top: 100px;">
+        <div style="margin: auto; width: 300px; margin-top: 100px;">
             <h:form id="loginForm" prependId="false"
                     onsubmit="this.action='/j_spring_security_check';">
 
@@ -32,12 +32,12 @@
                     <p:outputLabel for="_spring_security_remember_me"
                                    value="#{dictionary['Remember.me']}"/>
                     <p:outputPanel>
-                        <p:commandButton id="register" value="#{dictionary['Register']}" type="button"
-                                         onclick="window.location.href = '/register';"/>
-                        <p:commandButton style="float:right" id="submitButton"
-                                         ajax="false" type="submit" value="#{dictionary['Log.in']}"/>
                         <p:selectBooleanCheckbox id="_spring_security_remember_me"/>
                     </p:outputPanel>
+                    <p:commandButton id="register" value="#{dictionary['Register']}" type="button"
+                                     onclick="window.location.href = '/register';"/>
+                    <p:commandButton style="float:right" id="submitButton"
+                                     ajax="false" type="submit" value="#{dictionary['Log.in']}"/>
                 </p:panelGrid>
             </h:form>
         </div>
