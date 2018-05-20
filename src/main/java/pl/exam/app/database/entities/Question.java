@@ -1,6 +1,5 @@
 package pl.exam.app.database.entities;
 
-import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.CascadeType;

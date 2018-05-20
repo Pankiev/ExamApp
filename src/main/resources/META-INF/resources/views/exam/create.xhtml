@@ -6,9 +6,6 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
 <ui:composition template="../common/template.xhtml">
-    <ui:define name="head">
-        <script type="application/javascript" src="/js/resizeable-textarea.js"></script>
-    </ui:define>
     <ui:define name="content">
 
         <h1 >#{dictionary['Create.new.definition']}</h1>
@@ -23,7 +20,7 @@
 
                 <p:dataTable value="#{examCreator.questions}" var="question">
                     <p:column style="width: 90%" >
-                        <p:inputTextarea cols="80" rows="1" value="#{question.question}" onfocus="activateTextFieldResize(this)"/>
+                        <p:inputTextarea cols="80" rows="1" value="#{question.question}"/>
                         <p:commandButton style="float:right;" value="#{dictionary['Add.answer']}"
                                          update="answers"
                                          actionListener="#{examCreator.addQuestionAnswer(question)}"></p:commandButton>
@@ -35,8 +32,7 @@
                         </p:inputNumber>
                         <p:outputPanel id="answers">
                             <ui:repeat value="#{question.answers}" var="answer">
-                                <p:inputTextarea cols="80" rows="1" id="answer" value="#{answer.answer}"
-                                                 onfocus="activateTextFieldResize(this)">
+                                <p:inputTextarea cols="80" rows="1" id="answer" value="#{answer.answer}">
                                     <p:ajax event="blur" update="@this"/>
                                 </p:inputTextarea>
                                 #{dictionary['Is.valid']}:
