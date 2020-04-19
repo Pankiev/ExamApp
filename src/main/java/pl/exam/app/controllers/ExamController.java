@@ -66,7 +66,7 @@ public class ExamController {
     private String examStudentView(@PathVariable("id") Integer examId,
                                    SecurityContextHolderAwareRequestWrapper authentication) {
         UserExam userExam = userExamRepository
-                .findByKeyExamIdAndKeyUserNickname(examId, authentication.getRemoteUser());
+                .findByKeyExamIdAndKeyUserUsername(examId, authentication.getRemoteUser());
         if (testHasFinished(userExam))
             return "exam/result-student";
         if (testHasBeenOpened(userExam))
@@ -91,7 +91,7 @@ public class ExamController {
         if (exam.isEmpty())
             return "404/index";
         UserExam userExam = userExamRepository
-                .findByKeyExamIdAndKeyUserNickname(examId, authentication.getRemoteUser());
+                .findByKeyExamIdAndKeyUserUsername(examId, authentication.getRemoteUser());
         if (testHasFinished(userExam))
             return "redirect:/exam/" + examId;
         model.addAttribute("exam", exam.get());
@@ -121,8 +121,8 @@ public class ExamController {
     }
 
     private UserExam createUserExamEvent(Exam exam, SecurityContextHolderAwareRequestWrapper authentication) {
-        String nickname = authentication.getRemoteUser();
-        User user = userRepository.findByNickname(nickname);
+        String username = authentication.getRemoteUser();
+        User user = userRepository.findByUsername(username).orElseThrow();
         UserExamKey userExamKey = new UserExamKey(user, exam);
         Set<Question> randomQuestions = drawRandomQuestions(exam);
         Set<QuestionAnswer> randomQuestionAnswers = randomQuestions.stream()

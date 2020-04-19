@@ -6,5 +6,5 @@ import pl.exam.app.persistence.exam.Exam;
 import java.util.Collection;
 
 public interface ExamRepository extends CrudRepository<Exam, Integer> {
-    Collection<Exam> findByUsers_Key_User_Nickname(String nickname);
+    Collection<Exam> findByUsers_Key_User_Username(String username);
 }

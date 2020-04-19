@@ -59,7 +59,7 @@ public class RegisterBean {
     }
 
     private boolean isNicknameDuplicated(String username) {
-        return userRepository.existsByNickname(username);
+        return userRepository.existsByUsername(username);
     }
 
     private void redirectToRoot() {
@@ -77,7 +77,7 @@ public class RegisterBean {
 
     private void saveUser(UserDetails userDetails) {
         pl.exam.app.persistence.user.User user = new pl.exam.app.persistence.user.User();
-        user.setNickname(userDetails.getUsername());
+        user.setUsername(userDetails.getUsername());
         user.setPassword(userDetails.getPassword());
         Set<Role> roles = userDetails.getAuthorities().stream()
                 .map(role -> role.getAuthority().replace("ROLE_", ""))

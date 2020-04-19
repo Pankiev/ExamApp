@@ -16,7 +16,7 @@
         <h:form>
             <p:outputPanel id="users">
                 <p:dataTable var="userExamData" value="#{examResultView.usersAssignedToExamData}" >
-                    <p:column headerText="#{dictionary['Login']}" sortBy="#{userExamData.user.nickname}">
+                    <p:column headerText="#{dictionary['Login']}" sortBy="#{userExamData.user.username}">
                         <h:outputText value="#{userExamData.user.nickname}" />
                     </p:column>
                     <p:column headerText="#{dictionary['Class']}" sortBy="#{userExamData.user.schoolClass}">

@@ -5,11 +5,12 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import pl.exam.app.persistence.exam.Exam;
 
 import java.util.Collection;
+import java.util.Optional;
 
 public interface UserRepository extends PagingAndSortingRepository<User, Integer> {
-    User findByNickname(String nickname);
+    Optional<User> findByUsername(String username);
 
-    boolean existsByNickname(String nickname);
+    boolean existsByUsername(String username);
 
     @Query("SELECT u FROM User u, in (u.roles)role WHERE u.idInClass = null OR u.schoolClass = null")
     Iterable<User> getUsersWithoutClass();

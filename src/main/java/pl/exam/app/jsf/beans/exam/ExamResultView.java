@@ -23,7 +23,7 @@ public class ExamResultView {
     }
 
     public UserExam getUserExamResult() {
-        return userExamRepository.findByKeyExamIdAndKeyUserNickname(examId, getUsername());
+        return userExamRepository.findByKeyExamIdAndKeyUserUsername(examId, getUsername());
     }
 
     private String getUsername() {

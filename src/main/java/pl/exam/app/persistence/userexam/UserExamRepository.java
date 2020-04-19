@@ -9,5 +9,5 @@ import java.util.Collection;
 public interface UserExamRepository extends CrudRepository<UserExam, UserExamKey> {
     Collection<UserExam> findByKey_Exam_Id(Integer examId);
 
-    UserExam findByKeyExamIdAndKeyUserNickname(Integer examId, String nickname);
+    UserExam findByKeyExamIdAndKeyUserUsername(Integer examId, String username);
 }

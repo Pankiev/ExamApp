@@ -2,19 +2,15 @@ package pl.exam.app.controllers;
 
 import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
+@RequestMapping(
+        method={RequestMethod.POST,RequestMethod.GET,}
+)
 public class RootController {
-    @GetMapping("/")
-    public String welcomePage(SecurityContextHolderAwareRequestWrapper securityContext) {
-        if (!isUserLoggedIn(securityContext))
-            return "redirect:/authentication/login";
-        if (isAdmin(securityContext))
-            return "admin-index";
-        if (isStudent(securityContext))
-            return "exam/student-index";
-
+    @PostMapping("/")
+    public String welcomePage(@ModelAttribute("asd") String x) {
         return "redirect:/denied/index";
     }
 

@@ -35,7 +35,7 @@ public class TakeExamView {
     }
 
     private void initialize(Integer examId) {
-        userExam = userExamRepository.findByKeyExamIdAndKeyUserNickname(examId, getUserNickname());
+        userExam = userExamRepository.findByKeyExamIdAndKeyUserUsername(examId, getUserNickname());
         this.timeForExam = calculateTimeForExam(userExam);
         timerCycle();
         if (timeLeft <= 0)

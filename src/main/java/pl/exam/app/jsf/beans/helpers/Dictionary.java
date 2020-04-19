@@ -17,7 +17,8 @@ public class Dictionary implements Serializable {
     }
 
     public String getMessage(String key) {
-        return resourceBundle.getString(key);
+        return key;
+        //return resourceBundle.getString(key);
     }
 
 }
