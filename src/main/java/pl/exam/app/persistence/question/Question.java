@@ -1,5 +1,6 @@
 package pl.exam.app.persistence.question;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -31,5 +32,6 @@ public class Question {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "exam_id")
+    @JsonIgnore
     private Exam exam;
 }
