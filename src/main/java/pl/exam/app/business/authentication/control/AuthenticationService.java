@@ -1,8 +1,9 @@
-package pl.exam.app.configuration.authentication;
+package pl.exam.app.business.authentication.control;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.exam.app.persistence.Authority;
 import pl.exam.app.persistence.role.Role;
@@ -16,15 +17,17 @@ import java.util.stream.Collectors;
 @Service
 public class AuthenticationService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public AuthenticationService(UserRepository userRepository) {
+    public AuthenticationService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public String authenticate(String username, String password) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(AuthenticationException::new);
-        if (!Objects.equals(user.getPassword(), password)) {
+        if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new AuthenticationException();
         }
         List<String> authorities = getGrantedAuthorities(user);
@@ -34,7 +37,11 @@ public class AuthenticationService {
                 .withExpiresAt(expirationDate)
                 .withClaim("Authorities", authorities)
                 .withIssuedAt(Date.from(Instant.now()))
-                .sign(Algorithm.HMAC512(user.getPassword().getBytes()));
+                .sign(getAlgorithm(user.getPassword()));
+    }
+
+    private Algorithm getAlgorithm(String password) {
+        return Algorithm.HMAC512(password.getBytes());
     }
 
     private List<String> getGrantedAuthorities(User user) {
@@ -64,7 +71,6 @@ public class AuthenticationService {
                 .build()
                 .verify(decoded);
     }
-
 
     private boolean hasTokenExpired(DecodedJWT jwt) {
         return Date.from(Instant.now()).after(jwt.getExpiresAt());

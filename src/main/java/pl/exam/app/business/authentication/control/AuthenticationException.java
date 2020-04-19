@@ -1,4 +1,4 @@
-package pl.exam.app.configuration.authentication;
+package pl.exam.app.business.authentication.control;
 
 public class AuthenticationException extends RuntimeException {
 }

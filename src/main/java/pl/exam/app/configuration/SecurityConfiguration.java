@@ -1,14 +1,16 @@
 package pl.exam.app.configuration;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter;
-import pl.exam.app.configuration.authentication.AuthenticationService;
-import pl.exam.app.configuration.authentication.ExceptionHandlingFilter;
-import pl.exam.app.configuration.authentication.AuthorizationFilter;
+import pl.exam.app.business.authentication.control.AuthenticationService;
+import pl.exam.app.business.authentication.control.AuthorizationFilter;
 
 @Configuration
 @EnableWebSecurity

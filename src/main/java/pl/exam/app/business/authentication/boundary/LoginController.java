@@ -1,10 +1,9 @@
-package pl.exam.app.controllers;
+package pl.exam.app.business.authentication.boundary;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import pl.exam.app.configuration.authentication.AuthenticationException;
-import pl.exam.app.configuration.authentication.AuthenticationRequest;
-import pl.exam.app.configuration.authentication.AuthenticationService;
+import pl.exam.app.business.authentication.control.AuthenticationException;
+import pl.exam.app.business.authentication.control.AuthenticationService;
 
 @RestController
 public class LoginController {
