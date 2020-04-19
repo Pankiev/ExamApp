@@ -1,4 +1,4 @@
-package pl.exam.app.controllers;
+package pl.exam.app.business.exam.boundary;
 
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
