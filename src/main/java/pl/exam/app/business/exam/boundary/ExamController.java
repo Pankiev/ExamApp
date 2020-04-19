@@ -2,11 +2,10 @@ package pl.exam.app.business.exam.boundary;
 
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import pl.exam.app.business.authentication.control.UserDetails;
+import pl.exam.app.business.exam.control.ExamService;
 import pl.exam.app.persistence.exam.Exam;
 import pl.exam.app.persistence.question.Question;
 import pl.exam.app.persistence.QuestionAnswer;
@@ -20,32 +19,35 @@ import pl.exam.app.persistence.user.UserRepository;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Controller
+@RestController
 @RequestMapping("/exam")
 public class ExamController {
     private final static Random random = new Random();
     private final UserRepository userRepository;
     private final ExamRepository examRepository;
     private final UserExamRepository userExamRepository;
+    private final ExamService examService;
 
-    public ExamController(UserRepository userRepository, ExamRepository examRepository, UserExamRepository userExamRepository) {
+    public ExamController(UserRepository userRepository, ExamRepository examRepository, UserExamRepository userExamRepository, ExamService examService) {
         this.userRepository = userRepository;
         this.examRepository = examRepository;
         this.userExamRepository = userExamRepository;
+        this.examService = examService;
     }
 
-    @GetMapping({"/", "/index"})
-    public String examIndex(SecurityContextHolderAwareRequestWrapper authentication) {
-        if (authentication.isUserInRole("admin"))
-            return "exam/admin-index";
-        if (authentication.isUserInRole("student"))
-            return "exam/student-index";
-        return "denied/index";
+    @GetMapping({"", "/", "/index"})
+    public Collection<Exam> examIndex(UserDetails userDetails) {
+        return examService.findAll(userDetails);
+//        if (authentication.isUserInRole("admin"))
+//            return "exam/admin-index";
+//        if (authentication.isUserInRole("student"))
+//            return "exam/student-index";
+//        return "denied/index";
     }
 
-    @GetMapping("/create")
-    public String examCreate() {
-        return "exam/create";
+    @PostMapping("/create")
+    public Exam examCreate(UserDetails userDetails, @RequestBody CreateExamRequest request) {
+        return examService.createExam(userDetails, request);
     }
 
     @GetMapping("/{id}")
