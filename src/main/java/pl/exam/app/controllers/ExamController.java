@@ -8,152 +8,140 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import pl.exam.app.database.entities.Exam;
+import pl.exam.app.persistence.exam.Exam;
 import pl.exam.app.database.entities.Question;
 import pl.exam.app.database.entities.QuestionAnswer;
 import pl.exam.app.database.entities.User;
 import pl.exam.app.database.entities.components.UserExamKey;
 import pl.exam.app.database.entities.jointables.UserExam;
-import pl.exam.app.database.repositories.ExamRepository;
+import pl.exam.app.persistence.exam.ExamRepository;
 import pl.exam.app.database.repositories.UserExamRepository;
 import pl.exam.app.database.repositories.UserRepository;
 
-import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/exam")
-public class ExamController
-{
-	private final static Random random = new Random();
-	@Autowired
-	private UserRepository userRepository;
-	@Autowired
-	private ExamRepository examRepository;
-	@Autowired
-	private UserExamRepository userExamRepository;
+public class ExamController {
+    private final static Random random = new Random();
+    private final UserRepository userRepository;
+    private final ExamRepository examRepository;
+    private final UserExamRepository userExamRepository;
 
-	@GetMapping({ "/", "/index" })
-	public String examIndex(SecurityContextHolderAwareRequestWrapper authentication)
-	{
-		if (authentication.isUserInRole("admin"))
-			return "exam/admin-index";
-		if (authentication.isUserInRole("student"))
-			return "exam/student-index";
-		return "denied/index";
-	}
+    public ExamController(UserRepository userRepository, ExamRepository examRepository, UserExamRepository userExamRepository) {
+        this.userRepository = userRepository;
+        this.examRepository = examRepository;
+        this.userExamRepository = userExamRepository;
+    }
 
-	@GetMapping("/create")
-	public String examCreate()
-	{
-		return "exam/create";
-	}
+    @GetMapping({"/", "/index"})
+    public String examIndex(SecurityContextHolderAwareRequestWrapper authentication) {
+        if (authentication.isUserInRole("admin"))
+            return "exam/admin-index";
+        if (authentication.isUserInRole("student"))
+            return "exam/student-index";
+        return "denied/index";
+    }
 
-	@GetMapping("/{id}")
-	public String examShow(@PathVariable("id") Integer examId, ModelMap model,
-			SecurityContextHolderAwareRequestWrapper authentication)
-	{
-		Optional<Exam> exam = examRepository.findById(examId);
-		if (!exam.isPresent())
-			return "404/index";
-		model.addAttribute("exam", exam.get());
-		if (authentication.isUserInRole("admin"))
-			return "exam/admin-show";
-		if (authentication.isUserInRole("student"))
-			return examStudentView(examId, authentication);
+    @GetMapping("/create")
+    public String examCreate() {
+        return "exam/create";
+    }
 
-		return "denied/index";
-	}
+    @GetMapping("/{id}")
+    public String examShow(@PathVariable("id") Integer examId, ModelMap model,
+                           SecurityContextHolderAwareRequestWrapper authentication) {
+        Optional<Exam> exam = examRepository.findById(examId);
+        if (exam.isEmpty())
+            return "404/index";
+        model.addAttribute("exam", exam.get());
+        if (authentication.isUserInRole("admin"))
+            return "exam/admin-show";
+        if (authentication.isUserInRole("student"))
+            return examStudentView(examId, authentication);
 
-	private String examStudentView(@PathVariable("id") Integer examId,
-			SecurityContextHolderAwareRequestWrapper authentication)
-	{
-		UserExam userExam = userExamRepository
-				.findByKeyExamIdAndKeyUserNickname(examId, authentication.getRemoteUser());
-		if(testHasFinished(userExam))
-			return "exam/result-student";
-		if(testHasBeenOpened(userExam))
-			return "exam/take-test";
-		return "exam/student-show";
-	}
+        return "denied/index";
+    }
 
-	@GetMapping("/{id}/result")
-	@Secured("ROLE_admin")
-	public String examResult(@PathVariable("id") Integer examId, ModelMap model)
-	{
-		Optional<Exam> exam = examRepository.findById(examId);
-		if (!exam.isPresent())
-			return "404/index";
-		model.addAttribute("exam", exam.get());
-		return "exam/result-admin";
-	}
+    private String examStudentView(@PathVariable("id") Integer examId,
+                                   SecurityContextHolderAwareRequestWrapper authentication) {
+        UserExam userExam = userExamRepository
+                .findByKeyExamIdAndKeyUserNickname(examId, authentication.getRemoteUser());
+        if (testHasFinished(userExam))
+            return "exam/result-student";
+        if (testHasBeenOpened(userExam))
+            return "exam/take-test";
+        return "exam/student-show";
+    }
 
-	@GetMapping("/{id}/takeTest")
-	public String takeTest(@PathVariable("id") Integer examId, ModelMap model,
-			SecurityContextHolderAwareRequestWrapper authentication)
-	{
-		Optional<Exam> exam = examRepository.findById(examId);
-		if (!exam.isPresent())
-			return "404/index";
-		UserExam userExam = userExamRepository
-				.findByKeyExamIdAndKeyUserNickname(examId, authentication.getRemoteUser());
-		if(testHasFinished(userExam))
-			return "redirect:/exam/" + examId;
-		model.addAttribute("exam", exam.get());
-		if(userExam.getTestApproachDate() == null)
-			prepareForFirstTimeVisit(authentication, exam.get());
+    @GetMapping("/{id}/result")
+    @Secured("ROLE_admin")
+    public String examResult(@PathVariable("id") Integer examId, ModelMap model) {
+        Optional<Exam> exam = examRepository.findById(examId);
+        if (exam.isEmpty())
+            return "404/index";
+        model.addAttribute("exam", exam.get());
+        return "exam/result-admin";
+    }
 
-		return "exam/take-test";
-	}
+    @GetMapping("/{id}/takeTest")
+    public String takeTest(@PathVariable("id") Integer examId, ModelMap model,
+                           SecurityContextHolderAwareRequestWrapper authentication) {
+        Optional<Exam> exam = examRepository.findById(examId);
+        if (exam.isEmpty())
+            return "404/index";
+        UserExam userExam = userExamRepository
+                .findByKeyExamIdAndKeyUserNickname(examId, authentication.getRemoteUser());
+        if (testHasFinished(userExam))
+            return "redirect:/exam/" + examId;
+        model.addAttribute("exam", exam.get());
+        if (userExam.getTestApproachDate() == null)
+            prepareForFirstTimeVisit(authentication, exam.get());
 
-	private void prepareForFirstTimeVisit(SecurityContextHolderAwareRequestWrapper authentication, Exam exam)
-	{
-		UserExam newUserExam = createUserExamEvent(exam, authentication);
-		userExamRepository.save(newUserExam);
-	}
+        return "exam/take-test";
+    }
 
-	private boolean testHasBeenOpened(@Nullable UserExam userExam)
-	{
-		return userExam != null && userExam.getTestApproachDate() != null;
-	}
+    private void prepareForFirstTimeVisit(SecurityContextHolderAwareRequestWrapper authentication, Exam exam) {
+        UserExam newUserExam = createUserExamEvent(exam, authentication);
+        userExamRepository.save(newUserExam);
+    }
 
-	private boolean testHasFinished(@Nullable UserExam userExam)
-	{
-		return userExam != null && userExam.getFinished();
-	}
+    private boolean testHasBeenOpened(UserExam userExam) {
+        return userExam != null && userExam.getTestApproachDate() != null;
+    }
 
-	private QuestionAnswer toQuestionAnswer(Question question)
-	{
-		QuestionAnswer questionAnswer = new QuestionAnswer();
-		questionAnswer.setQuestion(question);
-		return questionAnswer;
-	}
+    private boolean testHasFinished(UserExam userExam) {
+        return userExam != null && userExam.getFinished();
+    }
 
-	private UserExam createUserExamEvent(Exam exam, SecurityContextHolderAwareRequestWrapper authentication)
-	{
-		String nickname = authentication.getRemoteUser();
-		User user = userRepository.findByNickname(nickname);
-		UserExamKey userExamKey = new UserExamKey(user, exam);
-		Set<Question> randomQuestions = drawRandomQuestions(exam);
-		Set<QuestionAnswer> randomQuestionAnswers = randomQuestions.stream()
-				.map(this::toQuestionAnswer)
-				.collect(Collectors.toSet());
+    private QuestionAnswer toQuestionAnswer(Question question) {
+        QuestionAnswer questionAnswer = new QuestionAnswer();
+        questionAnswer.setQuestion(question);
+        return questionAnswer;
+    }
 
-		UserExam userExam = userExamRepository.findById(userExamKey).get();
-		randomQuestionAnswers.forEach(questionAnswer -> questionAnswer.setUserExam(userExam));
-		userExam.setQuestionsWithAnswers(randomQuestionAnswers);
-		userExam.setTestApproachDate(new Date());
-		return userExam;
-	}
+    private UserExam createUserExamEvent(Exam exam, SecurityContextHolderAwareRequestWrapper authentication) {
+        String nickname = authentication.getRemoteUser();
+        User user = userRepository.findByNickname(nickname);
+        UserExamKey userExamKey = new UserExamKey(user, exam);
+        Set<Question> randomQuestions = drawRandomQuestions(exam);
+        Set<QuestionAnswer> randomQuestionAnswers = randomQuestions.stream()
+                .map(this::toQuestionAnswer)
+                .collect(Collectors.toSet());
 
-	private Set<Question> drawRandomQuestions(Exam exam)
-	{
-		Set<Question> randomQuestions = new HashSet<>();
-		List<Question> questions = exam.getQuestions();
-		while (!questions.isEmpty() && randomQuestions.size() < 10)
-			randomQuestions.add(questions.remove(random.nextInt(questions.size())));
-		return randomQuestions;
-	}
+        UserExam userExam = userExamRepository.findById(userExamKey).get();
+        randomQuestionAnswers.forEach(questionAnswer -> questionAnswer.setUserExam(userExam));
+        userExam.setQuestionsWithAnswers(randomQuestionAnswers);
+        userExam.setTestApproachDate(new Date());
+        return userExam;
+    }
+
+    private Set<Question> drawRandomQuestions(Exam exam) {
+        Set<Question> randomQuestions = new HashSet<>();
+        List<Question> questions = exam.getQuestions();
+        while (!questions.isEmpty() && randomQuestions.size() < 10)
+            randomQuestions.add(questions.remove(random.nextInt(questions.size())));
+        return randomQuestions;
+    }
 }

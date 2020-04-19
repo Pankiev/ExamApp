@@ -12,38 +12,32 @@ import java.util.Collection;
 
 @ManagedBean
 @ViewScoped
-public class ExamResultView
-{
-	private final UserExamRepository userExamRepository;
-	private final Collection<UserExam> userExams = new ArrayList<>();
-	private Integer examId;
+public class ExamResultView {
+    private final UserExamRepository userExamRepository;
+    private final Collection<UserExam> userExams = new ArrayList<>();
+    private Integer examId;
 
-	@Inject
-	public ExamResultView(UserExamRepository userExamRepository)
-	{
-		this.userExamRepository = userExamRepository;
-	}
+    @Inject
+    public ExamResultView(UserExamRepository userExamRepository) {
+        this.userExamRepository = userExamRepository;
+    }
 
-	public void setExamId(Integer examId)
-	{
-		if(examId != null)
-			this.examId = examId;
-	}
+    public void setExamId(Integer examId) {
+        if (examId != null)
+            this.examId = examId;
+    }
 
-	public UserExam getUserExamResult()
-	{
-		return userExamRepository.findByKeyExamIdAndKeyUserNickname(examId, getUsername());
-	}
+    public UserExam getUserExamResult() {
+        return userExamRepository.findByKeyExamIdAndKeyUserNickname(examId, getUsername());
+    }
 
-	private String getUsername()
-	{
-		return FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
-	}
+    private String getUsername() {
+        return FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
+    }
 
-	public Collection<UserExam> getUsersAssignedToExamData()
-	{
-		if(userExams.isEmpty())
-			userExams.addAll(userExamRepository.findByKey_Exam_Id(examId));
-		return userExams;
-	}
+    public Collection<UserExam> getUsersAssignedToExamData() {
+        if (userExams.isEmpty())
+            userExams.addAll(userExamRepository.findByKey_Exam_Id(examId));
+        return userExams;
+    }
 }

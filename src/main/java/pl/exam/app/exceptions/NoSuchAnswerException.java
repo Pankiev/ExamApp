@@ -1,5 +1,4 @@
 package pl.exam.app.exceptions;
 
-public class NoSuchAnswerException extends RuntimeException
-{
+public class NoSuchAnswerException extends RuntimeException {
 }

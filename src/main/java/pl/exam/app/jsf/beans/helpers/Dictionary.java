@@ -10,20 +10,17 @@ import java.util.ResourceBundle;
 
 @Component("DictionaryHelper")
 @SessionScoped
-public class Dictionary implements Serializable
-{
-	private transient ResourceBundle resourceBundle;
+public class Dictionary implements Serializable {
+    private transient ResourceBundle resourceBundle;
 
-	@PostConstruct
-	private void initialize()
-	{
-		FacesContext context = FacesContext.getCurrentInstance();
-		resourceBundle = context.getApplication().getResourceBundle(context, "dictionary");
-	}
+    @PostConstruct
+    private void initialize() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        resourceBundle = context.getApplication().getResourceBundle(context, "dictionary");
+    }
 
-	public String getMessage(String key)
-	{
-		return resourceBundle.getString(key);
-	}
+    public String getMessage(String key) {
+        return resourceBundle.getString(key);
+    }
 
 }

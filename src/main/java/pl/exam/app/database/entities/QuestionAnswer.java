@@ -12,30 +12,28 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode
-public class QuestionAnswer
-{
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private Integer id;
+public class QuestionAnswer {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Integer id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumns({ @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false),
-			@JoinColumn(name = "exam_id", referencedColumnName = "exam_id", nullable = false) })
-	private UserExam userExam;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumns({@JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false),
+            @JoinColumn(name = "exam_id", referencedColumnName = "exam_id", nullable = false)})
+    private UserExam userExam;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "question_id", nullable = true)
-	private Question question;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "question_id", nullable = true)
+    private Question question;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "answer_id", nullable = true)
-	private Answer answer;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "answer_id", nullable = true)
+    private Answer answer;
 
-	public QuestionAnswer(UserExam userExam, Question question, Answer answer)
-	{
-		this.userExam = userExam;
-		this.question = question;
-		this.answer = answer;
-	}
+    public QuestionAnswer(UserExam userExam, Question question, Answer answer) {
+        this.userExam = userExam;
+        this.question = question;
+        this.answer = answer;
+    }
 }

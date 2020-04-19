@@ -1,48 +1,47 @@
 package pl.exam.app.database.entities;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.*;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
 import pl.exam.app.database.entities.jointables.UserExam;
+import pl.exam.app.persistence.role.Role;
+
+import javax.persistence.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity(name = "User")
 @Table(name = "users", uniqueConstraints =
-@UniqueConstraint(columnNames = { "schoolClass", "idInClass" }))
+@UniqueConstraint(columnNames = {"schoolClass", "idInClass"}))
 @Data
 @EqualsAndHashCode(of = "id")
-public class User
-{
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private Integer id;
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Integer id;
 
-	@Column(name = "nickname", unique = true, nullable = false)
-	private String nickname;
+    @Column(name = "nickname", unique = true, nullable = false)
+    private String nickname;
 
-	@Column(name = "password", nullable = false)
-	private String password;
+    @Column(name = "password", nullable = false)
+    private String password;
 
-	@Column(name = "schoolClass")
-	private String schoolClass;
+    @Column(name = "schoolClass")
+    private String schoolClass;
 
-	@Column(name = "idInClass")
-	private Integer idInClass;
+    @Column(name = "idInClass")
+    private Integer idInClass;
 
-	@CreationTimestamp
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "creation_date", nullable = false)
-	private Date creationDate = new Date();
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "creation_date", nullable = false)
+    private Date creationDate = new Date();
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	private Set<Role> roles = new HashSet<>();
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Set<Role> roles = new HashSet<>();
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "key.user")
-	private Set<UserExam> exams;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "key.user")
+    private Set<UserExam> exams;
 }

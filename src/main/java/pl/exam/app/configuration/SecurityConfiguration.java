@@ -14,49 +14,45 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter
-{
-	@Autowired
-	@CustomAuthentication
-	private UserDetailsService userDetailsService;
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+    @Autowired
+    @CustomAuthentication
+    private UserDetailsService userDetailsService;
 
-	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception
-	{
-		auth.userDetailsService(userDetailsService);
-	}
-	
-	@Bean
-	public PasswordEncoder passwordEncoder()
-	{
-		return new FakePasswordEncoder();
-	}
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService);
+    }
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception  
-	{ 
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new FakePasswordEncoder();
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
         http
-            .authorizeRequests()
+                .authorizeRequests()
                 .antMatchers("/", "/authentication/**", "/register/**", "/register", "/javax.faces.resource/**", "/css/**",
-						"/images/**", "/js/**", "/views/**", "/error/**", "/debug/**", "/views/register/index.xhtml").permitAll()
+                        "/images/**", "/js/**", "/views/**", "/error/**", "/debug/**", "/views/register/index.xhtml").permitAll()
                 .anyRequest().hasAnyRole("admin", "student")
-            .and()
-            	.formLogin().loginPage("/authentication/login")
-            	.usernameParameter("j_username")
-            	.passwordParameter("j_password")
-            	.failureUrl("/authentication/login?error=true")
+                .and()
+                .formLogin().loginPage("/authentication/login")
+                .usernameParameter("j_username")
+                .passwordParameter("j_password")
+                .failureUrl("/authentication/login?error=true")
                 .loginProcessingUrl("/j_spring_security_check")
                 .defaultSuccessUrl("/", true)
-            .and()
+                .and()
                 .logout().logoutSuccessUrl("/")
-				.clearAuthentication(true)
-				.invalidateHttpSession(true)
-            .and()
-            	.csrf().disable()
-            .exceptionHandling().accessDeniedPage("/denied")
-            .and()
-            	.sessionManagement()
-				.maximumSessions(1)
-				.maxSessionsPreventsLogin(false);
-	}
+                .clearAuthentication(true)
+                .invalidateHttpSession(true)
+                .and()
+                .csrf().disable()
+                .exceptionHandling().accessDeniedPage("/denied")
+                .and()
+                .sessionManagement()
+                .maximumSessions(1)
+                .maxSessionsPreventsLogin(false);
+    }
 }
