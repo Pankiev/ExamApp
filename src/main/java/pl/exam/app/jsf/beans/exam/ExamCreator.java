@@ -3,25 +3,18 @@ package pl.exam.app.jsf.beans.exam;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
-import pl.exam.app.database.entities.Answer;
-import pl.exam.app.persistence.exam.Exam;
-import pl.exam.app.database.entities.Question;
-import pl.exam.app.persistence.exam.ExamRepository;
+import pl.exam.app.persistence.Answer;
+import pl.exam.app.persistence.question.Question;
 import pl.exam.app.jsf.beans.helpers.Dictionary;
+import pl.exam.app.persistence.exam.Exam;
+import pl.exam.app.persistence.exam.ExamRepository;
 
-import javax.annotation.ManagedBean;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-@ManagedBean
-@ViewScoped
 @Component
 public class ExamCreator {
     private final ExamRepository examRepository;
@@ -33,7 +26,6 @@ public class ExamCreator {
 
     private final List<Question> questions;
 
-    @Inject
     public ExamCreator(ExamRepository examRepository, Dictionary dictionary) {
         this.examRepository = examRepository;
         this.dictionary = dictionary;
@@ -80,19 +72,19 @@ public class ExamCreator {
 
     private void redirect(Integer id) {
         String url = "/exam/" + id;
-        try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect(url);
-        } catch (IOException e) {
-            showErrorMessage(e.getMessage());
-        }
+        //try {
+            //FacesContext.getCurrentInstance().getExternalContext().redirect(url);
+        //} catch (IOException e) {
+        //    showErrorMessage(e.getMessage());
+        //}
     }
 
     private void showSaveMessage() {
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Exam definition saved"));
+        //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Exam definition saved"));
     }
 
     private void showErrorMessage(String message) {
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", message));
+        //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", message));
     }
 
     public void addQuestionAnswer(Question question) {

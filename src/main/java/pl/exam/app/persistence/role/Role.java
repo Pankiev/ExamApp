@@ -2,7 +2,7 @@ package pl.exam.app.persistence.role;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import pl.exam.app.database.entities.Authority;
+import pl.exam.app.persistence.Authority;
 
 import javax.persistence.*;
 import java.util.Set;

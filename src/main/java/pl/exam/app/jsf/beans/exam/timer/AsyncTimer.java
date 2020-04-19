@@ -4,10 +4,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 
-@SessionScoped
 @Component
 public class AsyncTimer implements Serializable {
     private final static long UPDATE_INTERVAL_MILLISECONDS = 5000;

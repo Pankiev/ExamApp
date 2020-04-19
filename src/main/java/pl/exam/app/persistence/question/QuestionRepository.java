@@ -1,7 +1,6 @@
-package pl.exam.app.database.repositories;
+package pl.exam.app.persistence.question;
 
 import org.springframework.data.repository.CrudRepository;
-import pl.exam.app.database.entities.Question;
 
 import java.util.Set;
 

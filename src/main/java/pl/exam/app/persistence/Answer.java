@@ -1,8 +1,9 @@
-package pl.exam.app.database.entities;
+package pl.exam.app.persistence;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import pl.exam.app.persistence.question.Question;
 
 import javax.persistence.*;
 import java.io.Serializable;

@@ -1,4 +1,4 @@
-package pl.exam.app.database.entities;
+package pl.exam.app.persistence;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

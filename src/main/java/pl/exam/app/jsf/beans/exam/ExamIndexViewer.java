@@ -5,19 +5,14 @@ import pl.exam.app.persistence.exam.Exam;
 import pl.exam.app.persistence.exam.ExamRepository;
 
 import javax.annotation.ManagedBean;
-import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
 import java.util.Collection;
 import java.util.Collections;
 
 @ManagedBean
 @Component
-@ViewScoped
 public class ExamIndexViewer {
     private final ExamRepository examRepository;
 
-    @Inject
     public ExamIndexViewer(ExamRepository examRepository) {
         this.examRepository = examRepository;
     }
@@ -28,7 +23,8 @@ public class ExamIndexViewer {
     }
 
     public Collection<Exam> getLoggedUserExams() {
-        String username = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
-        return examRepository.findByUsers_Key_User_Nickname(username);
+        return Collections.emptyList();
+//        String username = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
+//        return examRepository.findByUsers_Key_User_Nickname(username);
     }
 }

@@ -1,23 +1,18 @@
 package pl.exam.app.jsf.beans.exam;
 
-import pl.exam.app.database.entities.jointables.UserExam;
-import pl.exam.app.database.repositories.UserExamRepository;
+import pl.exam.app.persistence.userexam.UserExam;
+import pl.exam.app.persistence.userexam.UserExamRepository;
 
 import javax.annotation.ManagedBean;
-import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Collection;
 
 @ManagedBean
-@ViewScoped
 public class ExamResultView {
     private final UserExamRepository userExamRepository;
     private final Collection<UserExam> userExams = new ArrayList<>();
     private Integer examId;
 
-    @Inject
     public ExamResultView(UserExamRepository userExamRepository) {
         this.userExamRepository = userExamRepository;
     }
@@ -32,7 +27,8 @@ public class ExamResultView {
     }
 
     private String getUsername() {
-        return FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
+        return "nullUsername";
+        //return FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
     }
 
     public Collection<UserExam> getUsersAssignedToExamData() {

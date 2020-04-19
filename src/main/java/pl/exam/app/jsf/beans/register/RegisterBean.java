@@ -11,14 +11,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import pl.exam.app.persistence.role.Role;
 import pl.exam.app.persistence.role.RoleRepository;
-import pl.exam.app.database.repositories.UserRepository;
+import pl.exam.app.persistence.user.UserRepository;
 import pl.exam.app.jsf.beans.helpers.Dictionary;
 
 import javax.annotation.ManagedBean;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
 import javax.validation.constraints.Size;
 import java.io.IOException;
 import java.util.Collections;
@@ -26,7 +22,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @ManagedBean
-@ViewScoped
 @Component
 public class RegisterBean {
     @Getter
@@ -45,7 +40,6 @@ public class RegisterBean {
     private final RoleRepository roleRepository;
     private final Dictionary dictionary;
 
-    @Inject
     public RegisterBean(UserRepository userRepository, RoleRepository roleRepository, Dictionary dictionary) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
@@ -69,20 +63,20 @@ public class RegisterBean {
     }
 
     private void redirectToRoot() {
-        try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("/");
-        } catch (IOException e) {
-            showErrorMessage(e.getMessage());
-        }
+//        try {
+//            FacesContext.getCurrentInstance().getExternalContext().redirect("/");
+//        } catch (IOException e) {
+//            showErrorMessage(e.getMessage());
+//        }
     }
 
     private void showErrorMessage(String message) {
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
-                FacesMessage.SEVERITY_ERROR, dictionary.getMessage("Error!"), message));
+//        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
+//                FacesMessage.SEVERITY_ERROR, dictionary.getMessage("Error!"), message));
     }
 
     private void saveUser(UserDetails userDetails) {
-        pl.exam.app.database.entities.User user = new pl.exam.app.database.entities.User();
+        pl.exam.app.persistence.user.User user = new pl.exam.app.persistence.user.User();
         user.setNickname(userDetails.getUsername());
         user.setPassword(userDetails.getPassword());
         Set<Role> roles = userDetails.getAuthorities().stream()

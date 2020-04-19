@@ -3,18 +3,14 @@ package pl.exam.app.jsf.beans.exam;
 import lombok.Getter;
 import lombok.Setter;
 import pl.exam.app.persistence.exam.Exam;
-import pl.exam.app.database.entities.User;
-import pl.exam.app.database.entities.jointables.UserExam;
+import pl.exam.app.persistence.user.User;
+import pl.exam.app.persistence.userexam.UserExam;
 import pl.exam.app.persistence.exam.ExamRepository;
-import pl.exam.app.database.repositories.UserExamRepository;
-import pl.exam.app.database.repositories.UserRepository;
+import pl.exam.app.persistence.userexam.UserExamRepository;
+import pl.exam.app.persistence.user.UserRepository;
 import pl.exam.app.jsf.beans.helpers.Dictionary;
 
 import javax.annotation.ManagedBean;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -22,7 +18,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @ManagedBean
-@ViewScoped
 public class ExamView {
     private final UserRepository userRepository;
     private final ExamRepository examRepository;
@@ -34,7 +29,6 @@ public class ExamView {
     @Setter
     private String selectedClass;
 
-    @Inject
     public ExamView(UserRepository userRepository, ExamRepository examRepository, UserExamRepository userExamRepository,
                     Dictionary dictionary) {
         this.userRepository = userRepository;
@@ -79,7 +73,7 @@ public class ExamView {
     }
 
     private void showSavedMessage() {
-        String saved = dictionary.getMessage("Users.saved");
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, saved, ""));
+        //String saved = dictionary.getMessage("Users.saved");
+        //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, saved, ""));
     }
 }

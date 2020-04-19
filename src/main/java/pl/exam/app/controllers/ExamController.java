@@ -1,6 +1,5 @@
 package pl.exam.app.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Controller;
@@ -9,14 +8,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.exam.app.persistence.exam.Exam;
-import pl.exam.app.database.entities.Question;
-import pl.exam.app.database.entities.QuestionAnswer;
-import pl.exam.app.database.entities.User;
-import pl.exam.app.database.entities.components.UserExamKey;
-import pl.exam.app.database.entities.jointables.UserExam;
+import pl.exam.app.persistence.question.Question;
+import pl.exam.app.persistence.QuestionAnswer;
+import pl.exam.app.persistence.user.User;
+import pl.exam.app.persistence.userexam.UserExamKey;
+import pl.exam.app.persistence.userexam.UserExam;
 import pl.exam.app.persistence.exam.ExamRepository;
-import pl.exam.app.database.repositories.UserExamRepository;
-import pl.exam.app.database.repositories.UserRepository;
+import pl.exam.app.persistence.userexam.UserExamRepository;
+import pl.exam.app.persistence.user.UserRepository;
 
 import java.util.*;
 import java.util.stream.Collectors;

@@ -1,9 +1,8 @@
-package pl.exam.app.database.repositories;
+package pl.exam.app.persistence.user;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import pl.exam.app.persistence.exam.Exam;
-import pl.exam.app.database.entities.User;
 
 import java.util.Collection;
 

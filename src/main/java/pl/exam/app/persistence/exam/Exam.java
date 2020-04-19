@@ -3,8 +3,8 @@ package pl.exam.app.persistence.exam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import pl.exam.app.database.entities.Question;
-import pl.exam.app.database.entities.jointables.UserExam;
+import pl.exam.app.persistence.question.Question;
+import pl.exam.app.persistence.userexam.UserExam;
 
 import javax.persistence.*;
 import java.util.List;

@@ -1,9 +1,10 @@
-package pl.exam.app.database.entities;
+package pl.exam.app.persistence;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import pl.exam.app.database.entities.jointables.UserExam;
+import pl.exam.app.persistence.question.Question;
+import pl.exam.app.persistence.userexam.UserExam;
 
 import javax.persistence.*;
 

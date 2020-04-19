@@ -1,23 +1,17 @@
 package pl.exam.app.jsf.beans.exam;
 
-import pl.exam.app.database.entities.Answer;
-import pl.exam.app.database.entities.Question;
-import pl.exam.app.database.entities.QuestionAnswer;
-import pl.exam.app.database.entities.jointables.UserExam;
-import pl.exam.app.database.repositories.UserExamRepository;
-import pl.exam.app.exceptions.NoSuchAnswerException;
+import pl.exam.app.persistence.Answer;
+import pl.exam.app.persistence.question.Question;
+import pl.exam.app.persistence.QuestionAnswer;
+import pl.exam.app.persistence.userexam.UserExam;
+import pl.exam.app.persistence.userexam.UserExamRepository;
 import pl.exam.app.jsf.beans.exam.timer.AsyncTimer;
 
 import javax.annotation.ManagedBean;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ValueChangeEvent;
-import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @ManagedBean
-@ViewScoped
 public class TakeExamView {
     private final UserExamRepository userExamRepository;
     private final AsyncTimer asyncTimer;
@@ -28,7 +22,6 @@ public class TakeExamView {
     private double timeForExam;
     private double timeLeft;
 
-    @Inject
     public TakeExamView(UserExamRepository userExamRepository, AsyncTimer asyncTimer) {
         this.userExamRepository = userExamRepository;
         this.asyncTimer = asyncTimer;
@@ -97,11 +90,11 @@ public class TakeExamView {
     }
 
     private String getUserNickname() {
-        return FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
+        return "NullUsernickname";
+        //return FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
     }
 
-    public void answerSelected(ValueChangeEvent event) {
-        Integer answerId = Integer.valueOf((String) event.getNewValue());
+    public void answerSelected(Integer answerId) {
         Answer answer = findAnswer(answerId);
         answers.put(answer.getQuestion(), answer);
     }

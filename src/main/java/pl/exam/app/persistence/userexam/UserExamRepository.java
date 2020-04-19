@@ -1,8 +1,8 @@
-package pl.exam.app.database.repositories;
+package pl.exam.app.persistence.userexam;
 
 import org.springframework.data.repository.CrudRepository;
-import pl.exam.app.database.entities.components.UserExamKey;
-import pl.exam.app.database.entities.jointables.UserExam;
+import pl.exam.app.persistence.userexam.UserExamKey;
+import pl.exam.app.persistence.userexam.UserExam;
 
 import java.util.Collection;
 

@@ -1,10 +1,10 @@
-package pl.exam.app.database.entities;
+package pl.exam.app.persistence.user;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
-import pl.exam.app.database.entities.jointables.UserExam;
 import pl.exam.app.persistence.role.Role;
+import pl.exam.app.persistence.userexam.UserExam;
 
 import javax.persistence.*;
 import java.util.Date;

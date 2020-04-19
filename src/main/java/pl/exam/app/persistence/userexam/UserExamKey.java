@@ -1,10 +1,10 @@
-package pl.exam.app.database.entities.components;
+package pl.exam.app.persistence.userexam;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.exam.app.persistence.exam.Exam;
-import pl.exam.app.database.entities.User;
+import pl.exam.app.persistence.user.User;
 
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;

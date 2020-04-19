@@ -1,4 +1,4 @@
-package pl.exam.app.configuration;
+package pl.exam.app.configuration.authentication;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
