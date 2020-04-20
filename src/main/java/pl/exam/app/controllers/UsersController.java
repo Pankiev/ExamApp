@@ -9,10 +9,6 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 @RequestMapping("/users")
 public class UsersController {
 
-    public UsersController(RequestMappingHandlerMapping handlerMapping) {
-        System.out.println(handlerMapping.getHandlerMethods());
-    }
-
     @GetMapping({"/", "/index"})
     public String index() {
         return "users/index";

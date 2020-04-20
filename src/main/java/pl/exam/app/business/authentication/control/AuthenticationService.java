@@ -10,11 +10,13 @@ import pl.exam.app.persistence.role.Role;
 import pl.exam.app.persistence.user.User;
 import pl.exam.app.persistence.user.UserRepository;
 
+import javax.transaction.Transactional;
 import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class AuthenticationService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;

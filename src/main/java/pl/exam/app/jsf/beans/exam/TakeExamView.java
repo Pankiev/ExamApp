@@ -41,7 +41,7 @@ public class TakeExamView {
         if (timeLeft <= 0)
             submitExam();
         else
-            startMesuringTime();
+            startMeasuringTime();
     }
 
     private double calculateTimeForExam(UserExam userExam) {
@@ -51,7 +51,7 @@ public class TakeExamView {
                 .sum();
     }
 
-    private void startMesuringTime() {
+    private void startMeasuringTime() {
         asyncTimer.startTimer(timeForExam, time -> timerCycle());
     }
 
@@ -94,12 +94,12 @@ public class TakeExamView {
         //return FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
     }
 
-    public void answerSelected(Integer answerId) {
+    public void answerSelected(Long answerId) {
         Answer answer = findAnswer(answerId);
         answers.put(answer.getQuestion(), answer);
     }
 
-    private Answer findAnswer(Integer answerId) {
+    private Answer findAnswer(Long answerId) {
         return shuffledData.stream()
                 .map(Question::getAnswers)
                 .flatMap(Collection::stream)
@@ -109,7 +109,7 @@ public class TakeExamView {
     }
 
     public void submitExam() {
-        userExam.getQuestionsWithAnswers().forEach(this::setChoosenAnswer);
+        userExam.getQuestionsWithAnswers().forEach(this::setChosenAnswer);
         userExam.setFinished(true);
         userExam.setTotalScore(calculateTotalScore(userExam.getQuestionsWithAnswers()));
         userExamRepository.save(userExam);
@@ -119,11 +119,11 @@ public class TakeExamView {
         return (float) questionsWithAnswers.stream()
                 .map(QuestionAnswer::getAnswer)
                 .filter(Objects::nonNull)
-                .filter(Answer::getValid)
+                .filter(Answer::isValid)
                 .count() / (float) questionsWithAnswers.size();
     }
 
-    private void setChoosenAnswer(QuestionAnswer questionAnswer) {
+    private void setChosenAnswer(QuestionAnswer questionAnswer) {
         questionAnswer.setAnswer(answers.get(questionAnswer.getQuestion()));
     }
 

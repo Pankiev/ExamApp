@@ -1,5 +1,6 @@
 package pl.exam.app.business.exam.boundary;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.ui.ModelMap;
@@ -36,17 +37,13 @@ public class ExamController {
     }
 
     @GetMapping({"", "/", "/index"})
-    public Collection<Exam> examIndex(UserDetails userDetails) {
+    public Collection<RestExamData> examIndex(UserDetails userDetails) {
         return examService.findAll(userDetails);
-//        if (authentication.isUserInRole("admin"))
-//            return "exam/admin-index";
-//        if (authentication.isUserInRole("student"))
-//            return "exam/student-index";
-//        return "denied/index";
     }
 
     @PostMapping("/create")
-    public Exam examCreate(UserDetails userDetails, @RequestBody CreateExamRequest request) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public RestExamData examCreate(UserDetails userDetails, @RequestBody RestExamData request) {
         return examService.createExam(userDetails, request);
     }
 

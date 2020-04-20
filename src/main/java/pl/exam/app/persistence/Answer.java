@@ -17,10 +17,10 @@ public class Answer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private Long id;
 
     @Column(name = "valid", nullable = false)
-    private Boolean valid = false;
+    private boolean valid = false;
 
     @Column(name = "answer", nullable = false)
     private String answer;

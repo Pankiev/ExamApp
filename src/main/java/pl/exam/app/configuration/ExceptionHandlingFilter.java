@@ -20,7 +20,7 @@ public class ExceptionHandlingFilter extends OncePerRequestFilter {
         try {
             filterChain.doFilter(request, response);
         } catch (Exception e) {
-            logger.error("Error on request filter: {}", e.getMessage());
+            logger.error("Error on request filter", e);
             response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             response.getWriter().write(e.getMessage());
         }
