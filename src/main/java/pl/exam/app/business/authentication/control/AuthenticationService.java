@@ -66,20 +66,22 @@ public class AuthenticationService {
     public void validate(String token) {
         try {
             doValidate(token);
+        } catch (TokenValidationException e) {
+            throw e;
         } catch (Exception e) {
-            throw new AuthenticationException("Invalid token", e);
+            throw new TokenValidationException("Invalid token", e);
         }
     }
 
     private void doValidate(String token) {
         DecodedJWT decoded = JWT.decode(token);
         if (hasTokenExpired(decoded)) {
-            throw new TokenValidationException();
+            throw new TokenValidationException("Token has expired");
         }
         String username = decoded.getSubject();
         String encryptedPassword = userRepository.findByUsername(username)
                 .map(User::getPassword)
-                .orElseThrow(TokenValidationException::new);
+                .orElseThrow(() -> new TokenValidationException("No such user"));
         JWT.require(Algorithm.HMAC512(encryptedPassword))
                 .build()
                 .verify(decoded);
