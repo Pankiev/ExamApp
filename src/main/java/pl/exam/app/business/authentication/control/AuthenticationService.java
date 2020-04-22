@@ -12,7 +12,10 @@ import pl.exam.app.persistence.user.UserRepository;
 
 import javax.transaction.Transactional;
 import java.time.Instant;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,9 +31,9 @@ public class AuthenticationService {
 
     public String authenticate(String username, String password) {
         User user = userRepository.findByUsername(username)
-                .orElseThrow(AuthenticationException::new);
+                .orElseThrow(() -> new AuthenticationException("Invalid credentials"));
         if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new AuthenticationException();
+            throw new AuthenticationException("Invalid credentials");
         }
         List<String> authorities = getGrantedAuthorities(user);
         Date expirationDate = getExpirationDate();
@@ -61,6 +64,14 @@ public class AuthenticationService {
     }
 
     public void validate(String token) {
+        try {
+            doValidate(token);
+        } catch (Exception e) {
+            throw new AuthenticationException("Invalid token", e);
+        }
+    }
+
+    private void doValidate(String token) {
         DecodedJWT decoded = JWT.decode(token);
         if (hasTokenExpired(decoded)) {
             throw new TokenValidationException();

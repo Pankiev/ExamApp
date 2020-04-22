@@ -32,6 +32,7 @@
                 <skipDocker>true</skipDocker>
                 <spring.jpa.hibernate.ddl-auto>update</spring.jpa.hibernate.ddl-auto>
                 <server.port>8080</server.port>
+                <devDepencencyScope>compile</devDepencencyScope>
             </properties>
         </profile>
 
@@ -49,6 +50,7 @@
                 <skipDocker>false</skipDocker>
                 <spring.jpa.hibernate.ddl-auto>update</spring.jpa.hibernate.ddl-auto>
                 <server.port>80</server.port>
+                <devDepencencyScope>optional</devDepencencyScope>
             </properties>
         </profile>
     </profiles>
@@ -138,6 +140,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
+            <scope>${devDepencencyScope}</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
