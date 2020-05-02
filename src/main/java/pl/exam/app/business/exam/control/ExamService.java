@@ -4,11 +4,18 @@ import org.springframework.stereotype.Service;
 import pl.exam.app.business.authentication.control.UserDetails;
 import pl.exam.app.business.exam.boundary.RestExamData;
 import pl.exam.app.business.exam.boundary.RestUserExamData;
+import pl.exam.app.business.exam.control.exception.AnswerNotFoundException;
 import pl.exam.app.business.exam.control.exception.ExamNotFoundException;
 import pl.exam.app.business.exam.control.exception.TakeExamException;
 import pl.exam.app.business.userexam.control.UserExamMapper;
+import pl.exam.app.persistence.answer.Answer;
+import pl.exam.app.persistence.answer.AnswerRepository;
 import pl.exam.app.persistence.exam.Exam;
 import pl.exam.app.persistence.exam.ExamRepository;
+import pl.exam.app.persistence.question.Question;
+import pl.exam.app.persistence.questionanswer.QuestionAnswer;
+import pl.exam.app.persistence.questionanswer.QuestionAnswerKey;
+import pl.exam.app.persistence.questionanswer.QuestionAnswerRepository;
 import pl.exam.app.persistence.user.User;
 import pl.exam.app.persistence.user.UserRepository;
 import pl.exam.app.persistence.userexam.UserExam;
@@ -27,11 +34,14 @@ public class ExamService {
     private final ExamRepository examRepository;
     private final UserRepository userRepository;
     private final UserExamRepository userExamRepository;
+    private final AnswerRepository answerRepository;
 
-    public ExamService(ExamRepository examRepository, UserRepository userRepository, UserExamRepository userExamRepository) {
+    public ExamService(ExamRepository examRepository, UserRepository userRepository,
+                       UserExamRepository userExamRepository, AnswerRepository answerRepository) {
         this.examRepository = examRepository;
         this.userRepository = userRepository;
         this.userExamRepository = userExamRepository;
+        this.answerRepository = answerRepository;
     }
 
     public Collection<RestExamData> findAll(UserDetails userDetails) {
@@ -48,6 +58,35 @@ public class ExamService {
     public RestUserExamData takeTest(UserDetails userDetails, Long examId) {
         validateForTakingTest(userDetails, examId);
         UserExam userExam = doTakeTest(userDetails, examId);
+        return userExamMapper.toRestData(userExam);
+    }
+
+    public void chooseActiveTestAnswer(UserDetails userDetails, Long answerId) {
+        Answer answer = answerRepository.findById(answerId)
+                .orElseThrow(() -> new AnswerNotFoundException(answerId));
+        Question question = answer.getQuestion();
+        Long examId = question.getExam().getId();
+        UserExam userExam = userExamRepository.findByKeyExamIdAndKeyUserUsername(examId, userDetails.getUsername())
+                .orElseThrow(() -> new TakeExamException("Test id " + examId + " has not been started for user " + userDetails.getUsername()));
+        if (userExam.isFinished()) {
+            throw new TakeExamException("Exam has been already taken");
+        }
+        updateUserAnswer(answer, question, userExam);
+    }
+
+    private void updateUserAnswer(Answer answer, Question question, UserExam userExam) {
+        userExam.getQuestionsWithAnswers().add(new QuestionAnswer(userExam, question, answer));
+    }
+
+    public RestUserExamData submitTest(UserDetails userDetails, Long examId) {
+        UserExam userExam = userExamRepository.findByKeyExamIdAndKeyUserUsername(examId, userDetails.getUsername())
+                .orElseThrow(() -> new TakeExamException("Test id " + examId + " has not been started for user " + userDetails.getUsername()));
+        if (userExam.isFinished()) {
+            throw new TakeExamException("Exam has been already taken");
+        }
+        int totalScore = userExamRepository.findTotalScore(userExam);
+        userExam.setTotalScore((float) totalScore);
+        userExam.setFinished(true);
         return userExamMapper.toRestData(userExam);
     }
 

@@ -3,7 +3,7 @@ package pl.exam.app.persistence.question;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import pl.exam.app.persistence.Answer;
+import pl.exam.app.persistence.answer.Answer;
 import pl.exam.app.persistence.exam.Exam;
 
 import javax.persistence.*;

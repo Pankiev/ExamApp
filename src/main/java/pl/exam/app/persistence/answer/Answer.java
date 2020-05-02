@@ -1,4 +1,4 @@
-package pl.exam.app.persistence;
+package pl.exam.app.persistence.answer;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

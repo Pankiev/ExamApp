@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import pl.exam.app.persistence.QuestionAnswer;
+import pl.exam.app.persistence.questionanswer.QuestionAnswer;
 import pl.exam.app.persistence.user.User;
 import pl.exam.app.persistence.exam.Exam;
 
@@ -31,7 +31,7 @@ public class UserExam {
     @Column(name = "test_approach_date")
     private Date testApproachDate;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "userExam")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "key.userExam")
     private Set<QuestionAnswer> questionsWithAnswers = new HashSet<>();
 
     @Column(name = "totalScore")

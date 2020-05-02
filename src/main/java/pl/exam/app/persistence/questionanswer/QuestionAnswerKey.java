@@ -1,24 +1,20 @@
-package pl.exam.app.persistence;
+package pl.exam.app.persistence.questionanswer;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import pl.exam.app.persistence.answer.Answer;
 import pl.exam.app.persistence.question.Question;
 import pl.exam.app.persistence.userexam.UserExam;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
-@Entity(name = "QuestionAnswer")
-@Table(name = "exam_result_question_answers")
+@Embeddable
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode
-public class QuestionAnswer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
-
+@AllArgsConstructor
+public class QuestionAnswerKey implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumns({@JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false),
             @JoinColumn(name = "exam_id", referencedColumnName = "exam_id", nullable = false)})
@@ -31,10 +27,4 @@ public class QuestionAnswer {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "answer_id", nullable = true)
     private Answer answer;
-
-    public QuestionAnswer(UserExam userExam, Question question, Answer answer) {
-        this.userExam = userExam;
-        this.question = question;
-        this.answer = answer;
-    }
 }

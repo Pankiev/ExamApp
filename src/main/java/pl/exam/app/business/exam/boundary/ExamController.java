@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.exam.app.business.ErrorEntity;
 import pl.exam.app.business.authentication.control.UserDetails;
 import pl.exam.app.business.exam.control.ExamService;
-import pl.exam.app.business.exam.control.exception.ExamNotFoundException;
+import pl.exam.app.business.exam.control.exception.EntityNotFoundException;
 import pl.exam.app.business.exam.control.exception.TakeExamException;
 
 import java.util.Collection;
@@ -43,8 +43,18 @@ public class ExamController {
         return examService.takeTest(userDetails, examId);
     }
 
+    @PostMapping("/chooseAnswer/{answerId}")
+    public void chooseAnswer(UserDetails userDetails, @PathVariable("answerId") Long answerId) {
+        examService.chooseActiveTestAnswer(userDetails, answerId);
+    }
+
+    @PostMapping("/{id}/submitTest")
+    public RestUserExamData submitTest(UserDetails userDetails, @PathVariable("id") Long examId) {
+        return examService.submitTest(userDetails, examId);
+    }
+
     @ExceptionHandler
-    private ErrorEntity handleNotFoundException(ExamNotFoundException e) {
+    private ErrorEntity handleNotFoundException(EntityNotFoundException e) {
         return ErrorEntity.notFound(e.getMessage());
     }
 

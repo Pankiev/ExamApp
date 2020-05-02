@@ -1,7 +1,7 @@
 package pl.exam.app.business.answer.control;
 
 import pl.exam.app.business.exam.boundary.RestAnswerData;
-import pl.exam.app.persistence.Answer;
+import pl.exam.app.persistence.answer.Answer;
 import pl.exam.app.persistence.question.Question;
 
 import java.util.Collection;

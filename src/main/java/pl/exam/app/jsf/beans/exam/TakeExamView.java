@@ -1,8 +1,8 @@
 package pl.exam.app.jsf.beans.exam;
 
-import pl.exam.app.persistence.Answer;
+import pl.exam.app.persistence.answer.Answer;
 import pl.exam.app.persistence.question.Question;
-import pl.exam.app.persistence.QuestionAnswer;
+import pl.exam.app.persistence.questionanswer.QuestionAnswer;
 import pl.exam.app.persistence.userexam.UserExam;
 import pl.exam.app.persistence.userexam.UserExamRepository;
 import pl.exam.app.jsf.beans.exam.timer.AsyncTimer;
