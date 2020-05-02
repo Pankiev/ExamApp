@@ -14,7 +14,6 @@ import pl.exam.app.persistence.exam.Exam;
 import pl.exam.app.persistence.exam.ExamRepository;
 import pl.exam.app.persistence.question.Question;
 import pl.exam.app.persistence.questionanswer.QuestionAnswer;
-import pl.exam.app.persistence.questionanswer.QuestionAnswerKey;
 import pl.exam.app.persistence.questionanswer.QuestionAnswerRepository;
 import pl.exam.app.persistence.user.User;
 import pl.exam.app.persistence.user.UserRepository;
@@ -35,13 +34,16 @@ public class ExamService {
     private final UserRepository userRepository;
     private final UserExamRepository userExamRepository;
     private final AnswerRepository answerRepository;
+    private final QuestionAnswerRepository questionAnswerRepository;
 
     public ExamService(ExamRepository examRepository, UserRepository userRepository,
-                       UserExamRepository userExamRepository, AnswerRepository answerRepository) {
+                       UserExamRepository userExamRepository, AnswerRepository answerRepository,
+                       QuestionAnswerRepository questionAnswerRepository) {
         this.examRepository = examRepository;
         this.userRepository = userRepository;
         this.userExamRepository = userExamRepository;
         this.answerRepository = answerRepository;
+        this.questionAnswerRepository = questionAnswerRepository;
     }
 
     public Collection<RestExamData> findAll(UserDetails userDetails) {
@@ -62,6 +64,14 @@ public class ExamService {
     }
 
     public void chooseActiveTestAnswer(UserDetails userDetails, Long answerId) {
+        activeTestUserQuestionChange(userDetails, answerId, this::chooseUserAnswer);
+    }
+
+    private void chooseUserAnswer(UserExam userExam, Question question, Answer answer) {
+        questionAnswerRepository.save(new QuestionAnswer(userExam, question, answer));
+    }
+
+    private void activeTestUserQuestionChange(UserDetails userDetails, Long answerId, ActiveTestUserQuestionAction action) {
         Answer answer = answerRepository.findById(answerId)
                 .orElseThrow(() -> new AnswerNotFoundException(answerId));
         Question question = answer.getQuestion();
@@ -71,11 +81,15 @@ public class ExamService {
         if (userExam.isFinished()) {
             throw new TakeExamException("Exam has been already taken");
         }
-        updateUserAnswer(answer, question, userExam);
+        action.apply(userExam, question, answer);
     }
 
-    private void updateUserAnswer(Answer answer, Question question, UserExam userExam) {
-        userExam.getQuestionsWithAnswers().add(new QuestionAnswer(userExam, question, answer));
+    public void unchooseActiveTestAnswer(UserDetails userDetails, Long answerId) {
+        activeTestUserQuestionChange(userDetails, answerId, this::unchooseUserAnswer);
+    }
+
+    private void unchooseUserAnswer(UserExam userExam, Question question, Answer answer) {
+        questionAnswerRepository.delete(new QuestionAnswer(userExam, question, answer));
     }
 
     public RestUserExamData submitTest(UserDetails userDetails, Long examId) {

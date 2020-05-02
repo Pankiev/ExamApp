@@ -10,7 +10,6 @@ import pl.exam.app.business.exam.boundary.RestQuestionData;
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RestQuestionAnswerData {
-    private final Long id;
     private final RestQuestionData question;
     private final RestAnswerData answer;
 }

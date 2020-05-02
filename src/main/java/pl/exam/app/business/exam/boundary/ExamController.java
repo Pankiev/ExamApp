@@ -48,6 +48,11 @@ public class ExamController {
         examService.chooseActiveTestAnswer(userDetails, answerId);
     }
 
+    @PostMapping("/unchooseAnswer/{answerId}")
+    public void unchooseAnswer(UserDetails userDetails, @PathVariable("answerId") Long answerId) {
+        examService.unchooseActiveTestAnswer(userDetails, answerId);
+    }
+
     @PostMapping("/{id}/submitTest")
     public RestUserExamData submitTest(UserDetails userDetails, @PathVariable("id") Long examId) {
         return examService.submitTest(userDetails, examId);
