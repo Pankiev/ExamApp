@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class TakeExamView {
     private final UserExamRepository userExamRepository;
     private final AsyncTimer asyncTimer;
-    private Integer examId;
+    private Long examId;
     private List<Question> shuffledData;
     private final Map<Question, Answer> answers = new HashMap<>();
     private UserExam userExam;
@@ -27,15 +27,15 @@ public class TakeExamView {
         this.asyncTimer = asyncTimer;
     }
 
-    public void setExamId(Integer examId) {
+    public void setExamId(Long examId) {
         if (examId != null && this.examId == null) {
             this.examId = examId;
             initialize(examId);
         }
     }
 
-    private void initialize(Integer examId) {
-        userExam = userExamRepository.findByKeyExamIdAndKeyUserUsername(examId, getUserNickname());
+    private void initialize(Long examId) {
+        userExam = userExamRepository.findByKeyExamIdAndKeyUserUsername(examId, getUserNickname()).orElseThrow();
         this.timeForExam = calculateTimeForExam(userExam);
         timerCycle();
         if (timeLeft <= 0)

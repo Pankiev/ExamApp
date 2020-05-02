@@ -3,10 +3,12 @@ package pl.exam.app.persistence.exam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
 import pl.exam.app.persistence.question.Question;
 import pl.exam.app.persistence.userexam.UserExam;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -25,7 +27,12 @@ public class Exam {
     private String name;
 
     @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL)
-    private List<Question> questions;
+    private Set<Question> questions;
+
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at", nullable = false)
+    private Date createdAt;
 
     @OneToMany(mappedBy = "key.exam")
     private Set<UserExam> users;

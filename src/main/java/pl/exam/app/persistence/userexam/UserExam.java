@@ -10,6 +10,7 @@ import pl.exam.app.persistence.exam.Exam;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity(name = "UserExam")
@@ -24,20 +25,20 @@ public class UserExam {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "assignment_date")
-    private Date assignmentDate = new Date();
+    private Date assignmentDate;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "test_approach_date")
     private Date testApproachDate;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "userExam")
-    private Set<QuestionAnswer> questionsWithAnswers;
+    private Set<QuestionAnswer> questionsWithAnswers = new HashSet<>();
 
     @Column(name = "totalScore")
     private Float totalScore;
 
     @Column(name = "finished")
-    private Boolean finished = false;
+    private boolean finished = false;
 
     public UserExam(User user, Exam exam) {
         setUser(user);

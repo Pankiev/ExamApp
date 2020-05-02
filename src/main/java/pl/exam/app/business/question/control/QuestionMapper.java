@@ -7,6 +7,7 @@ import pl.exam.app.persistence.question.Question;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class QuestionMapper {
@@ -27,10 +28,10 @@ public class QuestionMapper {
                 .build();
     }
 
-    public List<Question> toEntities(Collection<RestQuestionData> questions, Exam exam) {
+    public Set<Question> toEntities(Collection<RestQuestionData> questions, Exam exam) {
         return questions.stream()
                 .map(data -> toEntity(data, exam))
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
     }
 
     public Question toEntity(RestQuestionData data, Exam exam) {

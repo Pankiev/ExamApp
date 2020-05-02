@@ -2,7 +2,9 @@ package pl.exam.app.business.exam.control;
 
 import pl.exam.app.business.exam.boundary.RestExamData;
 import pl.exam.app.business.question.control.QuestionMapper;
+import pl.exam.app.business.userexam.control.UserExamMapper;
 import pl.exam.app.persistence.exam.Exam;
+import pl.exam.app.persistence.userexam.UserExam;
 
 import java.util.Collection;
 import java.util.stream.Collectors;

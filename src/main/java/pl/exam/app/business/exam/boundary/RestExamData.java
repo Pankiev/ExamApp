@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
+import pl.exam.app.persistence.userexam.UserExam;
 
 import java.util.Collection;
 import java.util.Collections;
