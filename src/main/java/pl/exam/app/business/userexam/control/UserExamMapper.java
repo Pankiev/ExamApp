@@ -18,7 +18,7 @@ public class UserExamMapper {
 
     public Collection<RestUserExamData> toUserApproachesRestData(Collection<UserExam> userExams) {
         return userExams.stream()
-                .map(this::toRestData)
+                .map(this::toUserApproachesRestData)
                 .collect(Collectors.toList());
     }
 

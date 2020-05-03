@@ -17,4 +17,6 @@ public interface UserExamRepository extends CrudRepository<UserExam, UserExamKey
             "WHERE qa.key.userExam=?1 " +
             "AND qa.key.answer.valid=true")
     int findTotalScore(UserExam userExam);
+
+    Collection<UserExam> findByKeyUserId(Long id);
 }

@@ -7,7 +7,11 @@ public class UserMapper {
 
     public RestUserData toRestData(User user) {
         return RestUserData.builder()
+                .id(user.getId())
                 .username(user.getUsername())
+                .creationDate(user.getCreationDate())
+                .idInClass(user.getIdInClass())
+                .schoolClass(user.getSchoolClass())
                 .build();
     }
 }
