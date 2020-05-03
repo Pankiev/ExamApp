@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
 import pl.exam.app.business.questionanswer.boundary.RestQuestionAnswerData;
+import pl.exam.app.business.user.boundary.RestUserData;
 
 import java.util.Date;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RestUserExamData {
     private final RestExamData exam;
+    private final RestUserData user;
     private final Date assignmentDate;
     private final Date testApproachDate;
     private final List<RestQuestionAnswerData> questionsWithAnswers;

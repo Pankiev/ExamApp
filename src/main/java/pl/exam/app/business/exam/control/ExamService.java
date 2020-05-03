@@ -144,6 +144,6 @@ public class ExamService {
 
     public Collection<RestUserExamData> getExamApproaches(Long examId) {
         Collection<UserExam> userExams = userExamRepository.findByKeyExamId(examId);
-        return userExamMapper.toRestData(userExams);
+        return userExamMapper.toUserApproachesRestData(userExams);
     }
 }

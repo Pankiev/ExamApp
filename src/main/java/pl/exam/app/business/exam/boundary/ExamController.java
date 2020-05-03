@@ -55,6 +55,11 @@ public class ExamController {
         return examService.submitTest(userDetails, examId);
     }
 
+    @GetMapping("/{id}/allApproaches")
+    public Collection<RestUserExamData> getAllApproaches(UserDetails userDetails, @PathVariable("id") Long examId) {
+        return examService.getExamApproaches(examId);
+    }
+
     @ExceptionHandler
     private ErrorEntity handleNotFoundException(EntityNotFoundException e) {
         return ErrorEntity.notFound(e.getMessage());

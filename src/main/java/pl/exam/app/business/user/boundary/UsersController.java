@@ -1,4 +1,4 @@
-package pl.exam.app.business.user;
+package pl.exam.app.business.user.boundary;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
