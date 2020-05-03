@@ -26,14 +26,16 @@ public class RegisterService {
         this.authenticationService = authenticationService;
     }
 
-    public String registerStudent(String username, String password) {
-        String encryptedPassword = passwordEncoder.encode(password);
+    public String registerStudent(RegisterRequest request) {
+        String encryptedPassword = passwordEncoder.encode(request.getPassword());
         User newUser = new User();
-        newUser.setUsername(username);
+        newUser.setUsername(request.getUsername());
         newUser.setPassword(encryptedPassword);
+        newUser.setSchoolClass(request.getSchoolClass());
+        newUser.setIdInClass(request.getIdInClass());
         Role studentRole = roleRepository.findByName("student");
         newUser.setRoles(Collections.singleton(studentRole));
         userRepository.save(newUser);
-        return authenticationService.authenticate(username, password);
+        return authenticationService.authenticate(request.getUsername(), request.getPassword());
     }
 }

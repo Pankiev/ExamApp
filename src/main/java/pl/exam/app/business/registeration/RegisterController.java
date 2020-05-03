@@ -15,6 +15,6 @@ public class RegisterController {
 
     @PostMapping("/register")
     public String register(@RequestBody RegisterRequest request) {
-        return registerService.registerStudent(request.getUsername(), request.getPassword());
+        return registerService.registerStudent(request);
     }
 }

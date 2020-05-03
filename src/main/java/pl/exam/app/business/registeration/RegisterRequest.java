@@ -8,11 +8,17 @@ import lombok.Data;
 public class RegisterRequest {
     private final String username;
     private final String password;
+    private final String schoolClass;
+    private final Integer idInClass;
 
     @JsonCreator
     public RegisterRequest(@JsonProperty("username") String username,
-                           @JsonProperty("password") String password) {
+                           @JsonProperty("password") String password,
+                           @JsonProperty("schoolClass") String schoolClass,
+                           @JsonProperty("idInClass") Integer idInClass) {
         this.username = username;
         this.password = password;
+        this.schoolClass = schoolClass;
+        this.idInClass = idInClass;
     }
 }
