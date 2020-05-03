@@ -1,8 +1,6 @@
 package pl.exam.app.business.exam.boundary;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import pl.exam.app.business.ErrorEntity;
 import pl.exam.app.business.authentication.control.UserDetails;
@@ -32,10 +30,9 @@ public class ExamController {
         return examService.createExam(userDetails, request);
     }
 
-    @GetMapping("/{id}/result")
-    @Secured("ROLE_admin")
-    public String examResult(@PathVariable("id") Integer examId, ModelMap model) {
-        return null;
+    @GetMapping("/{id}/userResult")
+    public RestUserExamData getUserExamResultDetails(UserDetails userDetails, @PathVariable("id") Long examId) {
+        return examService.getUserExamResultDetails(userDetails, examId);
     }
 
     @PostMapping("/{id}/takeTest")
@@ -53,7 +50,7 @@ public class ExamController {
         examService.unchooseActiveTestAnswer(userDetails, answerId);
     }
 
-    @PostMapping("/{id}/submitTest")
+    @PostMapping("/{id}/submit")
     public RestUserExamData submitTest(UserDetails userDetails, @PathVariable("id") Long examId) {
         return examService.submitTest(userDetails, examId);
     }

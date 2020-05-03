@@ -7,6 +7,7 @@ import pl.exam.app.business.exam.boundary.RestUserExamData;
 import pl.exam.app.business.exam.control.exception.AnswerNotFoundException;
 import pl.exam.app.business.exam.control.exception.ExamNotFoundException;
 import pl.exam.app.business.exam.control.exception.TakeExamException;
+import pl.exam.app.business.exam.control.exception.UserExamNotFoundException;
 import pl.exam.app.business.userexam.control.UserExamMapper;
 import pl.exam.app.persistence.answer.Answer;
 import pl.exam.app.persistence.answer.AnswerRepository;
@@ -130,5 +131,19 @@ public class ExamService {
         UserExam userExam = new UserExam(user, exam);
         userExam.setTestApproachDate(new Date());
         return userExam;
+    }
+
+    public RestUserExamData getUserExamResultDetails(UserDetails userDetails, Long examId) {
+        UserExam userExam = userExamRepository.findByKeyExamIdAndKeyUserUsername(examId, userDetails.getUsername())
+                .orElseThrow(() -> new UserExamNotFoundException(userDetails.getUsername(), examId));
+        if (!userExam.isFinished()) {
+            throw new TakeExamException("Exam is not finished yet");
+        }
+        return userExamMapper.toRestData(userExam);
+    }
+
+    public Collection<RestUserExamData> getExamApproaches(Long examId) {
+        Collection<UserExam> userExams = userExamRepository.findByKeyExamId(examId);
+        return userExamMapper.toRestData(userExams);
     }
 }
